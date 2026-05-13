@@ -1,0 +1,265 @@
+@import "../../../styles/variables";
+
+.login-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $body-bg;
+  overflow: hidden;
+  padding: 1rem;
+}
+
+/* Animated Background Shapes */
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+  animation: float 15s infinite ease-in-out alternate;
+}
+
+.shape-1 {
+  width: 400px;
+  height: 400px;
+  background: rgba($primary, 0.08);
+  top: -10%;
+  left: -10%;
+}
+
+.shape-2 {
+  width: 500px;
+  height: 500px;
+  background: rgba($secondary, 0.05);
+  bottom: -20%;
+  right: -10%;
+  animation-delay: -5s;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(40px, 40px) scale(1.1);
+  }
+}
+
+.login-wrapper {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.login-container {
+  display: flex;
+  background: white;
+  border-radius: 2rem;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.1);
+  min-height: 550px;
+}
+
+.brand-section {
+  flex: 1;
+  background-color: $primary;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    top: -50%;
+    left: -50%;
+  }
+}
+
+.brand-logo {
+  max-width: 200px;
+  margin-bottom: 2rem;
+  filter: brightness(0) invert(1);
+}
+
+.brand-content {
+  position: relative;
+  z-index: 1;
+
+  h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+
+  p {
+    opacity: 0.8;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+}
+
+.form-section {
+  flex: 1.2;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+}
+
+.form-content {
+  max-width: 340px;
+  margin: 0 auto;
+  width: 100%;
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: $dark;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    color: rgba($dark, 0.4);
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+  }
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.6rem;
+    color: rgba($dark, 0.7);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .input-wrapper {
+    position: relative;
+
+    i {
+      position: absolute;
+      left: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba($dark, 0.3);
+      font-size: 1.1rem;
+    }
+
+    input {
+      width: 100%;
+      background-color: $fondo-secundario;
+      border: 2px solid transparent;
+      border-radius: 1rem;
+      padding: 0.9rem 1rem 0.9rem 3.2rem;
+      color: $dark;
+      font-size: 1rem;
+      transition: $transition-base;
+      font-family: inherit;
+
+      &:focus {
+        background-color: white;
+        border-color: $secondary;
+        box-shadow: 0 10px 25px rgba($secondary, 0.1);
+        outline: none;
+
+        &+i {
+          color: $secondary;
+        }
+      }
+
+      &.invalid {
+        border-color: $danger;
+      }
+    }
+  }
+}
+
+.error-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background-color: rgba($danger, 0.1);
+  color: $danger;
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.btn-login {
+  width: 100%;
+  background-color: $primary;
+  color: white;
+  border: none;
+  padding: 1.1rem;
+  border-radius: 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: $transition-base;
+  box-shadow: 0 10px 20px rgba($primary, 0.2);
+  margin-top: 1rem;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba($primary, 0.3);
+    background-color: darken($primary, 5%);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.help-links {
+  margin-top: 2rem;
+  text-align: center;
+
+  a {
+    color: rgba($dark, 0.4);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: $transition-base;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .login-container {
+    flex-direction: column;
+    max-width: 450px;
+  }
+
+  .brand-section {
+    display: none;
+  }
+
+  .form-section {
+    padding: 3rem 2rem;
+  }
+}

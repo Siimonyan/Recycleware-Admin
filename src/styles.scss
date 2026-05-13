@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+// Importar nuestras variables
+@import "styles/variables";
+
+// Importar Bootstrap
+@import "bootstrap/scss/bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+:root {
+  --primary-color: #{$primary};
+  --secondary-color: #{$secondary};
+  --bg-light: #{$light};
+  --bg-secondary: #{$fondo-secundario};
+  --text-dark: #{$dark};
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-secondary);
+  color: var(--text-dark);
+  font-family: $font-family-base;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $headings-font-family;
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+// Estilos globales de tarjetas "premium" (ahora estilo React)
+.premium-card {
+  background-color: #ffffff;
+  border: none;
+  border-radius: $border-radius-lg;
+  padding: 1.5rem;
+  box-shadow: $box-shadow-sm;
+  transition: $transition-base;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba($primary, 0.12);
+  }
+}
+
+// Botones personalizados
+.btn-primary {
+  background-color: $primary;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: $transition-base;
+
+  &:hover {
+    background-color: darken($primary, 5%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba($primary, 0.3);
+  }
+}
+
+.btn-secondary {
+  background-color: $secondary;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  color: white;
+  transition: $transition-base;
+
+  &:hover {
+    background-color: darken($secondary, 5%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba($secondary, 0.3);
+  }
+}
+
+// Tablas premium (estilo claro)
+.premium-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+
+  thead th {
+    background-color: transparent;
+    color: rgba($dark, 0.6);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    border: none;
+    padding: 1rem;
+  }
+
+  tbody tr {
+    background-color: #ffffff;
+    transition: $transition-base;
+
+    td {
+      padding: 1rem;
+      border-top: 1px solid rgba($primary, 0.05);
+      border-bottom: 1px solid rgba($primary, 0.05);
+
+      &:first-child {
+        border-left: 1px solid rgba($primary, 0.05);
+        border-top-left-radius: 0.75rem;
+        border-bottom-left-radius: 0.75rem;
+      }
+
+      &:last-child {
+        border-right: 1px solid rgba($primary, 0.05);
+        border-top-right-radius: 0.75rem;
+        border-bottom-right-radius: 0.75rem;
+      }
+    }
+
+    &:hover {
+      transform: scale(1.01);
+      box-shadow: 0 4px 12px rgba($primary, 0.05);
+    }
+  }
+}
+
+// Badges de estado (estilo React)
+.badge {
+  padding: 0.5em 1em;
+  border-radius: 2rem;
+  font-weight: 600;
+  font-size: 0.75rem;
+
+  &.bg-success {
+    background-color: rgba($success, 0.15) !important;
+    color: darken($success, 10%);
+  }
+
+  &.bg-warning {
+    background-color: rgba($warning, 0.15) !important;
+    color: darken($warning, 15%);
+  }
+
+  &.bg-danger {
+    background-color: rgba($danger, 0.15) !important;
+    color: darken($danger, 5%);
+  }
+
+  &.bg-primary {
+    background-color: rgba($primary, 0.15) !important;
+    color: $primary;
+  }
+}
+
+// Animaciones
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

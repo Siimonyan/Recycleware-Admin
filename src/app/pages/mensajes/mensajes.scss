@@ -1,0 +1,100 @@
+@import "../../../styles/variables";
+
+.messages-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+
+  h3 { color: $primary; margin: 0; }
+}
+
+.badge-count {
+  background-color: rgba($primary, 0.08);
+  color: $primary;
+  padding: 0.4rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.message-item {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background-color: $fondo-secundario;
+  border-radius: 1rem;
+  transition: $transition-base;
+  border: 1px solid transparent;
+
+  &:hover {
+    background-color: white;
+    border-color: rgba($primary, 0.1);
+    transform: translateX(5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  }
+}
+
+.message-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 1rem;
+  background-color: $primary;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  box-shadow: 0 8px 15px rgba($primary, 0.2);
+}
+
+.message-content {
+  flex: 1;
+}
+
+.message-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+}
+
+.sender-name {
+  display: block;
+  font-weight: 700;
+  color: $dark;
+  font-size: 1rem;
+}
+
+.sender-email {
+  font-size: 0.85rem;
+  color: rgba($dark, 0.4);
+}
+
+.message-date {
+  font-size: 0.8rem;
+  color: rgba($dark, 0.3);
+  font-weight: 600;
+}
+
+.message-text {
+  margin: 0;
+  color: rgba($dark, 0.7);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem;
+  
+  i { font-size: 3rem; color: rgba($dark, 0.1); margin-bottom: 1rem; display: block; }
+  p { color: rgba($dark, 0.4); font-weight: 600; }
+}

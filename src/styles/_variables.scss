@@ -1,0 +1,21 @@
+// Colores extraídos del proyecto React
+$primary: rgb(8, 53, 80); // Azul marino profundo
+$secondary: rgb(60, 162, 146); // Verde azulado
+$success: rgb(78, 190, 149); // Verde Menta
+$info: rgb(33, 158, 188); // Azul cielo
+$warning: rgb(255, 183, 3); // Ámbar
+$danger: rgb(231, 111, 81); // Terracota
+$light: rgb(250, 246, 246); // Fondo principal
+$dark: rgb(18, 27, 38); // Texto muy oscuro
+
+$body-bg: $light;
+$fondo-secundario: rgb(236, 248, 248);
+
+// Fuentes
+$font-family-base: 'Outfit', sans-serif;
+$headings-font-family: 'Plus Jakarta Sans', sans-serif;
+
+// Mixins y Utilidades
+$border-radius-lg: 1rem;
+$box-shadow-sm: 0 10px 40px rgba($primary, 0.06);
+$transition-base: all 0.3s ease;

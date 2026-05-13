@@ -1,0 +1,131 @@
+@import "../../../styles/variables";
+
+.premium-card {
+  h3 {
+    margin-bottom: 0.5rem;
+    color: $primary;
+  }
+}
+
+.user-cell {
+  .font-bold {
+    font-weight: 600;
+    color: $dark;
+    margin: 0;
+  }
+  .text-xs {
+    font-size: 0.8rem;
+    color: rgba($dark, 0.4);
+  }
+}
+
+.font-bold {
+  font-weight: 600;
+  color: $dark;
+  margin: 0;
+}
+
+.text-xs {
+  font-size: 0.85rem;
+  color: rgba($dark, 0.5);
+}
+
+/* Badges de estado dinámicos */
+.badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  
+  &.pend { background-color: rgba($warning, 0.15); color: darken($warning, 15%); }
+  &.aprob { background-color: rgba($success, 0.15); color: darken($success, 10%); }
+  &.rech { background-color: rgba($danger, 0.15); color: darken($danger, 5%); }
+  &.rev { background-color: rgba($info, 0.15); color: darken($info, 10%); }
+}
+
+.table-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.action-btn {
+  background-color: $fondo-secundario;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: $transition-base;
+  color: $primary;
+
+  &:hover {
+    background-color: $primary;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  &.btn-approve:hover { background-color: $success; }
+  &.btn-reject:hover { background-color: $danger; }
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba($dark, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: white;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+
+  h3 {
+    font-size: 1.5rem;
+    color: $primary;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.info-section {
+  margin-bottom: 1.5rem;
+  
+  label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: rgba($dark, 0.4);
+    letter-spacing: 1px;
+    margin-bottom: 0.4rem;
+  }
+
+  .reason-box {
+    background-color: $fondo-secundario;
+    border-radius: 1rem;
+    padding: 1.2rem;
+    margin-top: 0.5rem;
+    
+    p {
+      margin: 0;
+      color: rgba($dark, 0.7);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+  }
+}

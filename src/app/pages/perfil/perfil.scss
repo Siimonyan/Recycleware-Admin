@@ -1,0 +1,62 @@
+@import "../../../styles/variables";
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: rgba($dark, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .form-control {
+    background-color: $fondo-secundario;
+    border: 2px solid transparent;
+    border-radius: 0.75rem;
+    padding: 0.8rem 1rem;
+    transition: $transition-base;
+
+    &:focus {
+      background-color: white;
+      border-color: $secondary;
+      box-shadow: 0 8px 20px rgba($secondary, 0.1);
+      outline: none;
+    }
+
+    &[readonly] {
+      background-color: rgba($dark, 0.03);
+      cursor: not-allowed;
+      border-style: dashed;
+      border-color: rgba($dark, 0.1);
+    }
+  }
+}
+
+.footer-actions {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba($dark, 0.05);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.success-alert {
+  background-color: rgba($success, 0.1);
+  color: $success;
+  padding: 1.2rem;
+  border-radius: 1rem;
+  text-align: center;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  border: 1px solid rgba($success, 0.2);
+}
