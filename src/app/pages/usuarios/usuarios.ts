@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
 import { Usuario } from '../../interfaces/admin.interfaces';
 import { FormsModule } from '@angular/forms';
 
@@ -14,26 +15,26 @@ import { FormsModule } from '@angular/forms';
       <div class="table-header">
         <div class="search-box">
           <div class="input-group">
-            <span class="input-group-text bg-transparent border-0"><i class="bi bi-search"></i></span>
-            <input type="text" class="form-control" placeholder="Buscar por nombre o correo..." [(ngModel)]="filterTerm">
+            <span class="input-group-text bg-transparent border-0"><i class="bi bi-search" aria-hidden="true"></i></span>
+            <input id="userSearchInput" type="text" class="form-control" placeholder="Buscar por nombre o correo..." [(ngModel)]="filterTerm" aria-label="Buscar usuarios">
           </div>
         </div>
-        <button class="btn-primary" (click)="loadUsuarios()">
-          <i class="bi bi-arrow-clockwise me-2"></i>
+        <button id="refreshUsersBtn" class="btn-primary" (click)="loadUsuarios()" aria-label="Actualizar lista de usuarios">
+          <i class="bi bi-arrow-clockwise me-2" aria-hidden="true"></i>
           Actualizar
         </button>
       </div>
 
       <div class="table-responsive">
-        <table class="premium-table">
+        <table class="premium-table" aria-label="Listado de usuarios registrados">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Correo</th>
-              <th>Rol</th>
-              <th>Localidad</th>
-              <th>Acciones</th>
+              <th scope="col">ID</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Correo</th>
+              <th scope="col">Rol</th>
+              <th scope="col">Localidad</th>
+              <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -47,15 +48,15 @@ import { FormsModule } from '@angular/forms';
               <td>{{ u.localidad || '—' }}</td>
               <td>
                 <div class="table-actions">
-                  <button (click)="editUsuario(u)" class="action-btn edit" title="Editar Datos">
-                    <i class="bi bi-pencil-fill"></i>
+                  <button [id]="'editUserBtn-' + u.id" (click)="editUsuario(u)" class="action-btn edit" title="Editar Datos" [attr.aria-label]="'Editar datos de ' + u.nombre">
+                    <i class="bi bi-pencil-fill" aria-hidden="true"></i>
                   </button>
-                  <button (click)="openRoleModal(u)" class="action-btn role" title="Cambiar Rol">
-                    <i class="bi bi-shield-lock-fill"></i>
+                  <button [id]="'roleUserBtn-' + u.id" (click)="openRoleModal(u)" class="action-btn role" title="Cambiar Rol" [attr.aria-label]="'Cambiar rol de ' + u.nombre">
+                    <i class="bi bi-shield-lock-fill" aria-hidden="true"></i>
                   </button>
-                  <button (click)="deleteUsuario(u.id)" class="action-btn delete" title="Eliminar">
-                    <i class="bi bi-trash-fill"></i>
-                  </button>
+                   <button *ngIf="u.id !== currentAdminId" [id]="'deleteUserBtn-' + u.id" (click)="deleteUsuario(u.id)" class="action-btn delete" title="Eliminar" [attr.aria-label]="'Eliminar usuario ' + u.nombre">
+                      <i class="bi bi-trash-fill" aria-hidden="true"></i>
+                   </button>
                 </div>
               </td>
             </tr>
@@ -65,49 +66,49 @@ import { FormsModule } from '@angular/forms';
     </div>
 
     <!-- Modal Editar Usuario -->
-    <div class="modal-overlay" *ngIf="showEditModal">
+    <div class="modal-overlay" *ngIf="showEditModal" role="dialog" aria-labelledby="editUserTitle">
        <div class="modal-content animate-fade-in">
-          <h3>Editar Usuario</h3>
+          <h3 id="editUserTitle">Editar Usuario</h3>
           <p class="text-muted mb-4">Modifica los datos del usuario.</p>
           
           <div class="form-group">
-            <label>Nombre Completo</label>
-            <input type="text" class="form-control" [(ngModel)]="currentUser.nombre">
+            <label for="editUserName">Nombre Completo</label>
+            <input id="editUserName" type="text" class="form-control" [(ngModel)]="currentUser.nombre">
           </div>
           
           <div class="form-group">
-            <label>Correo Electrónico</label>
-            <input type="email" class="form-control" [(ngModel)]="currentUser.correo">
+            <label for="editUserEmail">Correo Electrónico</label>
+            <input id="editUserEmail" type="email" class="form-control" [(ngModel)]="currentUser.correo">
           </div>
           
           <div class="form-group">
-            <label>Localidad</label>
-            <input type="text" class="form-control" [(ngModel)]="currentUser.localidad">
+            <label for="editUserLoc">Localidad</label>
+            <input id="editUserLoc" type="text" class="form-control" [(ngModel)]="currentUser.localidad">
           </div>
           
           <div class="modal-actions">
-            <button class="btn btn-light" (click)="closeEditModal()">Cancelar</button>
-            <button class="btn-primary" (click)="saveUsuario()">Guardar Cambios</button>
+            <button id="cancelEditUserBtn" class="btn btn-light" (click)="closeEditModal()">Cancelar</button>
+            <button id="saveEditUserBtn" class="btn-primary" (click)="saveUsuario()">Guardar Cambios</button>
           </div>
        </div>
     </div>
 
     <!-- Modal Cambiar Rol -->
-    <div class="modal-overlay" *ngIf="showRoleModal">
+    <div class="modal-overlay" *ngIf="showRoleModal" role="dialog" aria-labelledby="changeRoleTitle">
        <div class="modal-content animate-fade-in">
-          <h3>Cambiar Rol</h3>
+          <h3 id="changeRoleTitle">Cambiar Rol</h3>
           <p class="text-muted mb-4">Selecciona el nuevo rol para <strong>{{ roleUser.nombre }}</strong>.</p>
           
           <div class="form-group">
-            <label>Nuevo Rol</label>
-            <select class="form-control" [(ngModel)]="roleUser.rol">
+            <label for="roleSelect">Nuevo Rol</label>
+            <select id="roleSelect" class="form-control" [(ngModel)]="roleUser.rol">
               <option *ngFor="let rol of availableRoles" [value]="rol">{{ rol }}</option>
             </select>
           </div>
           
           <div class="modal-actions">
-            <button class="btn btn-light" (click)="closeRoleModal()">Cancelar</button>
-            <button class="btn-primary" (click)="saveRole()">Asignar Rol</button>
+            <button id="cancelRoleBtn" class="btn btn-light" (click)="closeRoleModal()">Cancelar</button>
+            <button id="saveRoleBtn" class="btn-primary" (click)="saveRole()">Asignar Rol</button>
           </div>
        </div>
     </div>
@@ -118,14 +119,16 @@ export class UsuariosComponent implements OnInit {
   filterTerm = '';
   showEditModal = false;
   currentUser: any = {};
+  currentAdminId: number | null = null;
   
   showRoleModal = false;
   roleUser: any = {};
   availableRoles = ['ADMIN', 'PARTICULAR', 'EMPRESA'];
 
-  constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) {}
+  constructor(private apiService: ApiService, private authService: AuthService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
+    this.currentAdminId = this.authService.getCurrentUser()?.id || null;
     this.loadUsuarios();
   }
 
@@ -196,7 +199,14 @@ export class UsuariosComponent implements OnInit {
 
   deleteUsuario(id: number) {
     if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-      this.apiService.deleteUsuario(id).subscribe(() => this.loadUsuarios());
+      this.apiService.deleteUsuario(id).subscribe({
+        next: () => this.loadUsuarios(),
+        error: (err) => {
+          console.error('Error al eliminar usuario:', err);
+          const msg = err.error?.error || 'No se pudo eliminar el usuario. Es posible que tenga registros asociados.';
+          alert(msg);
+        }
+      });
     }
   }
 }

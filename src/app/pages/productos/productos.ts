@@ -14,39 +14,41 @@ import { FormsModule } from '@angular/forms';
       <div class="table-header">
         <div class="search-box">
           <div class="input-group">
-            <span class="input-group-text bg-transparent border-0"><i class="bi bi-search"></i></span>
-            <input type="text" class="form-control" placeholder="Buscar por nombre..." [(ngModel)]="filterTerm">
+            <span class="input-group-text bg-transparent border-0"><i class="bi bi-search" aria-hidden="true"></i></span>
+            <input id="productSearchInput" type="text" class="form-control" placeholder="Buscar por nombre..." [(ngModel)]="filterTerm" aria-label="Buscar productos">
           </div>
         </div>
         <div class="filters">
-          <select class="form-control" [(ngModel)]="selectedCategoria" (change)="loadProductos()">
+          <label for="catFilterSelect" class="visually-hidden">Filtrar por categoría</label>
+          <select id="catFilterSelect" class="form-control" [(ngModel)]="selectedCategoria" (change)="loadProductos()">
             <option value="">Todas las Categorías</option>
             <option *ngFor="let cat of categorias" [value]="cat.nombre">{{ cat.nombre }}</option>
           </select>
         </div>
-        <button class="btn-primary" (click)="showCreateModal = true">
-          <i class="bi bi-plus-lg me-2"></i>
+        <button id="newProductBtn" class="btn-primary" (click)="showCreateModal = true" aria-label="Añadir nuevo producto">
+          <i class="bi bi-plus-lg me-2" aria-hidden="true"></i>
           Nuevo Producto
         </button>
       </div>
 
       <div class="table-responsive">
-        <table class="premium-table">
+        <table class="premium-table" aria-label="Listado de productos disponibles">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Imagen</th>
-              <th>Nombre</th>
-              <th>Categoría</th>
-              <th>Estado</th>
-              <th>Acciones</th>
+              <th scope="col">ID</th>
+              <th scope="col">Imagen</th>
+               <th scope="col">Nombre</th>
+               <th scope="col">Categoría</th>
+               <th scope="col">Estado</th>
+               <th scope="col">Disponibilidad</th>
+               <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let p of filteredProductos()" class="animate-fade-in">
               <td><span class="text-muted">#{{ p.id }}</span></td>
               <td>
-                <img [src]="getProductImage(p.imagenUrl)" class="product-img clickable-img" alt="prod" (error)="handleImgError($event)" (click)="viewImage(getProductImage(p.imagenUrl))">
+                <img [src]="getProductImage(p.imagenUrl)" class="product-img clickable-img" [attr.alt]="'Imagen de ' + p.nombre" (error)="handleImgError($event)" (click)="viewImage(getProductImage(p.imagenUrl))" tabindex="0" (keyup.enter)="viewImage(getProductImage(p.imagenUrl))">
               </td>
               <td>
                 <p class="font-bold">{{ p.nombre }}</p>
@@ -55,19 +57,22 @@ import { FormsModule } from '@angular/forms';
               <td>
                 <span class="cat-badge">{{ p.categoria.nombre }}</span>
               </td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <span class="status-dot" [ngClass]="p.disponibilidad.nombre === 'Disponible' ? 'bg-green' : 'bg-red'"></span>
-                  <span class="small font-weight-bold">{{ p.disponibilidad.nombre }}</span>
-                </div>
-              </td>
+               <td>
+                 <span class="state-badge">{{ p.estado?.nombre || 'N/A' }}</span>
+               </td>
+               <td>
+                 <div class="d-flex align-items-center">
+                   <span class="status-dot" [ngClass]="p.disponibilidad?.nombre === 'Disponible' ? 'bg-green' : 'bg-red'" aria-hidden="true"></span>
+                   <span class="small font-weight-bold">{{ p.disponibilidad?.nombre || 'N/A' }}</span>
+                 </div>
+               </td>
               <td>
                 <div class="table-actions">
-                  <button class="action-btn" (click)="editProduct(p)" title="Editar">
-                    <i class="bi bi-pencil-fill"></i>
+                  <button [id]="'editProdBtn-' + p.id" class="action-btn" (click)="editProduct(p)" title="Editar" [attr.aria-label]="'Editar producto ' + p.nombre">
+                    <i class="bi bi-pencil-fill" aria-hidden="true"></i>
                   </button>
-                  <button class="action-btn delete" (click)="deleteProduct(p.id)" title="Eliminar">
-                    <i class="bi bi-trash-fill"></i>
+                  <button [id]="'deleteProdBtn-' + p.id" class="action-btn delete" (click)="deleteProduct(p.id)" title="Eliminar" [attr.aria-label]="'Eliminar producto ' + p.nombre">
+                    <i class="bi bi-trash-fill" aria-hidden="true"></i>
                   </button>
                 </div>
               </td>
@@ -78,65 +83,89 @@ import { FormsModule } from '@angular/forms';
     </div>
 
     <!-- Modal de Producto -->
-    <div class="modal-overlay" *ngIf="showCreateModal">
+    <div class="modal-overlay" *ngIf="showCreateModal" role="dialog" aria-labelledby="productModalTitle">
        <div class="modal-content animate-fade-in">
-          <h3>{{ editingProduct ? 'Editar' : 'Nuevo' }} Producto</h3>
+          <h3 id="productModalTitle">{{ editingProduct ? 'Editar' : 'Nuevo' }} Producto</h3>
           <p class="text-muted mb-4">Completa la información del producto.</p>
           
           <div class="form-group">
-            <label>Nombre del Producto</label>
-            <input type="text" class="form-control" [(ngModel)]="currentProduct.nombre">
+            <label for="prodNameInput">Nombre del Producto</label>
+            <input id="prodNameInput" type="text" class="form-control" [(ngModel)]="currentProduct.nombre">
           </div>
           
           <div class="form-group">
-            <label>Descripción</label>
-            <textarea class="form-control" [(ngModel)]="currentProduct.descripcion" rows="3"></textarea>
+            <label for="prodDescInput">Descripción</label>
+            <textarea id="prodDescInput" class="form-control" [(ngModel)]="currentProduct.descripcion" rows="3"></textarea>
           </div>
           
           <div class="form-group">
-            <label>Categoría</label>
-            <select class="form-control" [(ngModel)]="currentProduct.categoria.id">
+            <label for="prodCatSelect">Categoría</label>
+            <select id="prodCatSelect" class="form-control" [(ngModel)]="currentProduct.categoria.id">
               <option value="0" disabled>Selecciona una categoría...</option>
               <option *ngFor="let cat of categorias" [value]="cat.id">{{ cat.nombre }}</option>
             </select>
           </div>
           
-          <div class="form-group">
-            <label>Imágenes</label>
-            <input type="file" class="form-control" multiple accept="image/*" (change)="onFileSelected($event)">
-          </div>
+           <div class="form-row">
+            <div class="form-group col-6">
+               <label for="prodStateSelect">Estado</label>
+               <select id="prodStateSelect" class="form-control" [(ngModel)]="currentProduct.estado.id">
+                 <option *ngFor="let s of estados" [value]="s.id">{{ s.nombre }}</option>
+               </select>
+             </div>
+             <div class="form-group col-6">
+               <label for="prodDispSelect">Disponibilidad</label>
+               <select id="prodDispSelect" class="form-control" [(ngModel)]="currentProduct.disponibilidad.id">
+                 <option *ngFor="let d of disponibilidades" [value]="d.id">{{ d.nombre }}</option>
+               </select>
+             </div>
+           </div>
+
+           <div class="form-group">
+             <label for="prodFileInput">Imágenes</label>
+             <input id="prodFileInput" type="file" class="form-control" multiple accept="image/*" (change)="onFileSelected($event)">
+           </div>
           
           <div class="image-previews" *ngIf="previewImages.length > 0">
             <div class="preview-container" *ngFor="let src of previewImages; let i = index">
-              <img [src]="src" class="preview-img" alt="preview">
-              <button class="remove-btn" (click)="removeImage(i)"><i class="bi bi-x"></i></button>
+              <img [src]="src" class="preview-img" alt="Vista previa de imagen seleccionada">
+              <button class="remove-btn" (click)="removeImage(i)" aria-label="Eliminar imagen seleccionada"><i class="bi bi-x" aria-hidden="true"></i></button>
             </div>
           </div>
           
           <div class="modal-actions">
-            <button class="btn btn-light" (click)="closeModal()">Cancelar</button>
-            <button class="btn-primary" (click)="saveProduct()">{{ editingProduct ? 'Actualizar' : 'Guardar' }}</button>
+            <button id="cancelProdBtn" class="btn btn-light" (click)="closeModal()">Cancelar</button>
+            <button id="saveProdBtn" class="btn-primary" (click)="saveProduct()">{{ editingProduct ? 'Actualizar' : 'Guardar' }}</button>
           </div>
        </div>
     </div>
 
     <!-- Modal de Imagen -->
-    <div class="modal-overlay" *ngIf="showImageModal" (click)="showImageModal = false">
+    <div class="modal-overlay" *ngIf="showImageModal" (click)="showImageModal = false" role="dialog" aria-label="Visor de imagen ampliada">
        <div class="zoom-modal-content" (click)="$event.stopPropagation()">
-          <img [src]="selectedImage" class="zoomed-img" alt="Zoomed Product">
-          <button class="close-zoom-btn" (click)="showImageModal = false"><i class="bi bi-x-lg"></i></button>
+          <img [src]="selectedImage" class="zoomed-img" alt="Imagen ampliada del producto">
+          <button id="closeZoomBtn" class="close-zoom-btn" (click)="showImageModal = false" aria-label="Cerrar visor de imagen"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
        </div>
     </div>
   `
 })
 export class ProductosComponent implements OnInit {
-  productos: Producto[] = [];
+   productos: Producto[] = [];
   categorias: Categoria[] = [];
+  estados: any[] = [];
+  disponibilidades: any[] = [];
+
   filterTerm = '';
   selectedCategoria = '';
   showCreateModal = false;
   editingProduct = false;
-  currentProduct: any = { nombre: '', descripcion: '', categoria: { id: 0 } };
+  currentProduct: any = { 
+    nombre: '', 
+    descripcion: '', 
+    categoria: { id: 0 },
+    estado: { id: 1 },
+    disponibilidad: { id: 1 }
+  };
   previewImages: string[] = [];
   selectedFiles: File[] = [];
   
@@ -148,12 +177,11 @@ export class ProductosComponent implements OnInit {
 
   constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) {}
 
-  ngOnInit() {
+   ngOnInit() {
     this.loadProductos();
-    this.apiService.getCategorias().subscribe(res => {
-      this.categorias = res;
-      this.cdr.detectChanges();
-    });
+    this.apiService.getCategorias().subscribe(res => this.categorias = res);
+    this.apiService.getProductStates().subscribe(res => this.estados = res);
+    this.apiService.getProductAvailabilities().subscribe(res => this.disponibilidades = res);
   }
 
   loadProductos() {
@@ -180,9 +208,9 @@ export class ProductosComponent implements OnInit {
   editProduct(producto: Producto) {
     this.editingProduct = true;
     this.currentProduct = { ...producto };
-    if (!this.currentProduct.categoria) {
-      this.currentProduct.categoria = { id: 0 };
-    }
+     if (!this.currentProduct.categoria) this.currentProduct.categoria = { id: 0 };
+    if (!this.currentProduct.estado) this.currentProduct.estado = { id: 1 };
+    if (!this.currentProduct.disponibilidad) this.currentProduct.disponibilidad = { id: 1 };
     this.previewImages = [];
     if (this.currentProduct.imagenUrl) {
       this.previewImages.push(this.getProductImage(this.currentProduct.imagenUrl));
@@ -190,32 +218,46 @@ export class ProductosComponent implements OnInit {
     this.showCreateModal = true;
   }
 
-  onFileSelected(event: any) {
+   onFileSelected(event: any) {
     const files = event.target.files;
     if (files && files.length > 0) {
-      this.selectedFiles = Array.from(files);
-      for (let i = 0; i < files.length; i++) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.previewImages.push(e.target.result);
-        };
-        reader.readAsDataURL(files[i]);
-      }
+      this.selectedFiles = [files[0]];
+      this.previewImages = []; 
+      
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.previewImages = [e.target.result];
+      };
+      reader.readAsDataURL(files[0]);
     }
   }
 
   removeImage(index: number) {
     this.previewImages.splice(index, 1);
+    this.selectedFiles.splice(index, 1);
+    if (this.previewImages.length === 0) {
+      this.currentProduct.imagenUrl = null;
+    }
   }
 
-  saveProduct() {
+   saveProduct() {
     this.apiService.saveProducto(this.currentProduct).subscribe((res) => {
+      // Si hay un archivo nuevo seleccionado, lo subimos
       if (this.selectedFiles.length > 0) {
-        this.apiService.uploadProductoImagen(res.id, this.selectedFiles[0]).subscribe(() => {
-          this.loadProductos();
-          this.closeModal();
+        this.apiService.uploadProductoImagen(res.id, this.selectedFiles[0]).subscribe({
+          next: () => {
+            this.loadProductos();
+            this.closeModal();
+          },
+          error: (err) => {
+            console.error('Error al subir imagen:', err);
+            alert('Producto guardado, pero hubo un error al subir la imagen.');
+            this.loadProductos();
+            this.closeModal();
+          }
         });
       } else {
+        // Si no hay archivo nuevo, simplemente refrescamos (por si se borró la imagen anterior)
         this.loadProductos();
         this.closeModal();
       }
@@ -228,10 +270,16 @@ export class ProductosComponent implements OnInit {
     }
   }
 
-  closeModal() {
+   closeModal() {
     this.showCreateModal = false;
     this.editingProduct = false;
-    this.currentProduct = { nombre: '', descripcion: '', categoria: { id: 0 } };
+    this.currentProduct = { 
+      nombre: '', 
+      descripcion: '', 
+      categoria: { id: 0 },
+      estado: { id: 1 },
+      disponibilidad: { id: 1 }
+    };
     this.previewImages = [];
     this.selectedFiles = [];
   }
@@ -240,7 +288,8 @@ export class ProductosComponent implements OnInit {
     if (!img) return 'https://img.icons8.com/fluency/48/box.png';
     if (img.startsWith('http')) return img;
     if (img.startsWith('/api/images')) return `http://localhost:8080${img}`;
-    return `http://localhost:8080/uploads/productos/${img}`;
+    // Agregamos /api porque el backend tiene server.servlet.context-path=/api
+    return `http://localhost:8080/api/uploads/productos/${img}`;
   }
 
   handleImgError(event: any) {

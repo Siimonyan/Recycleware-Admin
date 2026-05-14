@@ -12,18 +12,18 @@ import { RouterModule } from '@angular/router';
   template: `
     <!-- Toolbar -->
     <div class="dashboard-toolbar">
-      <h2 class="dashboard-title">Panel General</h2>
-      <button class="btn-export" (click)="exportExcel()" title="Exportar estadísticas a Excel">
-        <i class="bi bi-file-earmark-excel-fill text-success"></i>
+      <h2 id="pageTitle" class="dashboard-title">Panel General</h2>
+      <button id="exportStatsBtn" class="btn-export" (click)="exportExcel()" title="Exportar estadísticas a Excel" aria-label="Exportar estadísticas a archivo CSV">
+        <i class="bi bi-file-earmark-excel-fill text-success" aria-hidden="true"></i>
         Exportar Excel
       </button>
     </div>
 
     <!-- KPI Cards Row 1 -->
-    <div class="kpi-grid">
+    <div class="kpi-grid" role="region" aria-label="Indicadores clave de rendimiento">
 
-      <div class="kpi-card" (click)="nav('usuarios')" title="Ir a Usuarios">
-        <div class="kpi-icon users">
+      <div id="kpi-users" class="kpi-card" (click)="nav('usuarios')" title="Ir a Usuarios" tabindex="0" role="link" (keyup.enter)="nav('usuarios')" aria-label="Usuarios totales: {{ stats.totalUsuarios ?? 'cargando' }}">
+        <div class="kpi-icon users" aria-hidden="true">
           <i class="bi bi-people-fill"></i>
         </div>
         <div class="kpi-body">
@@ -32,8 +32,8 @@ import { RouterModule } from '@angular/router';
         </div>
       </div>
 
-      <div class="kpi-card" (click)="nav('productos')" title="Ir a Productos">
-        <div class="kpi-icon products">
+      <div id="kpi-products" class="kpi-card" (click)="nav('productos')" title="Ir a Productos" tabindex="0" role="link" (keyup.enter)="nav('productos')" aria-label="Productos totales: {{ stats.totalProductos ?? 'cargando' }}">
+        <div class="kpi-icon products" aria-hidden="true">
           <i class="bi bi-box-seam-fill"></i>
         </div>
         <div class="kpi-body">
@@ -42,8 +42,8 @@ import { RouterModule } from '@angular/router';
         </div>
       </div>
 
-      <div class="kpi-card" (click)="nav('solicitudes')" title="Ir a Solicitudes">
-        <div class="kpi-icon requests">
+      <div id="kpi-requests" class="kpi-card" (click)="nav('solicitudes')" title="Ir a Solicitudes" tabindex="0" role="link" (keyup.enter)="nav('solicitudes')" aria-label="Solicitudes totales: {{ stats.totalSolicitudes ?? 'cargando' }}">
+        <div class="kpi-icon requests" aria-hidden="true">
           <i class="bi bi-file-earmark-text-fill"></i>
         </div>
         <div class="kpi-body">
@@ -52,8 +52,8 @@ import { RouterModule } from '@angular/router';
         </div>
       </div>
 
-      <div class="kpi-card" (click)="nav('donaciones')" title="Ir a Donaciones">
-        <div class="kpi-icon donations">
+      <div id="kpi-donations" class="kpi-card" (click)="nav('donaciones')" title="Ir a Donaciones" tabindex="0" role="link" (keyup.enter)="nav('donaciones')" aria-label="Donaciones totales: {{ stats.totalDonaciones ?? 'cargando' }}">
+        <div class="kpi-icon donations" aria-hidden="true">
           <i class="bi bi-heart-fill"></i>
         </div>
         <div class="kpi-body">
@@ -68,59 +68,59 @@ import { RouterModule } from '@angular/router';
     <div class="dashboard-bottom mt-5">
 
       <!-- Solicitudes Breakdown -->
-      <div class="breakdown-card">
+      <div class="breakdown-card" role="region" aria-labelledby="breakdownTitle">
         <div class="d-flex justify-content-between align-items-center mb-4">
-          <h3>Estado de Solicitudes</h3>
-          <button class="btn btn-link p-0 text-decoration-none" (click)="nav('solicitudes')">Ver todas</button>
+          <h3 id="breakdownTitle">Estado de Solicitudes</h3>
+          <button id="viewAllSolicitudesBtn" class="btn btn-link p-0 text-decoration-none" (click)="nav('solicitudes')" aria-label="Ver todas las solicitudes">Ver todas</button>
         </div>
         
         <div class="breakdown-list">
-          <div class="breakdown-item">
+          <div class="breakdown-item" [attr.aria-label]="'Pendientes: ' + (stats.solicitudesPendientes ?? 0)">
             <div class="bd-label">
-              <span class="status-dot pend"></span> Pendiente
+              <span class="status-dot pend" aria-hidden="true"></span> Pendiente
             </div>
             <div class="bd-bar-wrap">
-              <div class="bd-bar bg-warning" [style.width.%]="getPct(stats.solicitudesPendientes, stats.totalSolicitudes)"></div>
+              <div class="bd-bar bg-warning" [style.width.%]="getPct(stats.solicitudesPendientes, stats.totalSolicitudes)" role="progressbar" [attr.aria-valuenow]="getPct(stats.solicitudesPendientes, stats.totalSolicitudes)" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <span class="bd-count">{{ stats.solicitudesPendientes ?? 0 }}</span>
           </div>
           
-          <div class="breakdown-item">
+          <div class="breakdown-item" [attr.aria-label]="'En revisión: ' + getEnRevision()">
             <div class="bd-label">
-              <span class="status-dot rev"></span> En Revisión
+              <span class="status-dot rev" aria-hidden="true"></span> En Revisión
             </div>
             <div class="bd-bar-wrap">
-              <div class="bd-bar bg-info" [style.width.%]="getPct(getEnRevision(), stats.totalSolicitudes)"></div>
+              <div class="bd-bar bg-info" [style.width.%]="getPct(getEnRevision(), stats.totalSolicitudes)" role="progressbar" [attr.aria-valuenow]="getPct(getEnRevision(), stats.totalSolicitudes)" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <span class="bd-count">{{ getEnRevision() }}</span>
           </div>
           
-          <div class="breakdown-item">
+          <div class="breakdown-item" [attr.aria-label]="'Aprobadas: ' + (stats.solicitudesAprobadas ?? 0)">
             <div class="bd-label">
-              <span class="status-dot appr"></span> Aprobada
+              <span class="status-dot appr" aria-hidden="true"></span> Aprobada
             </div>
             <div class="bd-bar-wrap">
-              <div class="bd-bar bg-success" [style.width.%]="getPct(stats.solicitudesAprobadas, stats.totalSolicitudes)"></div>
+              <div class="bd-bar bg-success" [style.width.%]="getPct(stats.solicitudesAprobadas, stats.totalSolicitudes)" role="progressbar" [attr.aria-valuenow]="getPct(stats.solicitudesAprobadas, stats.totalSolicitudes)" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <span class="bd-count">{{ stats.solicitudesAprobadas ?? 0 }}</span>
           </div>
           
-          <div class="breakdown-item">
+          <div class="breakdown-item" [attr.aria-label]="'Denegadas: ' + (stats.solicitudesDenegadas ?? 0)">
             <div class="bd-label">
-              <span class="status-dot deny"></span> Denegada
+              <span class="status-dot deny" aria-hidden="true"></span> Denegada
             </div>
             <div class="bd-bar-wrap">
-              <div class="bd-bar bg-danger" [style.width.%]="getPct(stats.solicitudesDenegadas, stats.totalSolicitudes)"></div>
+              <div class="bd-bar bg-danger" [style.width.%]="getPct(stats.solicitudesDenegadas, stats.totalSolicitudes)" role="progressbar" [attr.aria-valuenow]="getPct(stats.solicitudesDenegadas, stats.totalSolicitudes)" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <span class="bd-count">{{ stats.solicitudesDenegadas ?? 0 }}</span>
           </div>
           
-          <div class="breakdown-item">
+          <div class="breakdown-item" [attr.aria-label]="'Entregadas: ' + (stats.solicitudesEntregadas ?? 0)">
             <div class="bd-label">
-              <span class="status-dot del"></span> Entregada
+              <span class="status-dot del" aria-hidden="true"></span> Entregada
             </div>
             <div class="bd-bar-wrap">
-              <div class="bd-bar bg-primary" [style.width.%]="getPct(stats.solicitudesEntregadas, stats.totalSolicitudes)"></div>
+              <div class="bd-bar bg-primary" [style.width.%]="getPct(stats.solicitudesEntregadas, stats.totalSolicitudes)" role="progressbar" [attr.aria-valuenow]="getPct(stats.solicitudesEntregadas, stats.totalSolicitudes)" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <span class="bd-count">{{ stats.solicitudesEntregadas ?? 0 }}</span>
           </div>
@@ -128,36 +128,36 @@ import { RouterModule } from '@angular/router';
       </div>
 
       <!-- Quick Access Panel -->
-      <div class="quick-access-card">
-        <h3>Acceso Rápido</h3>
+      <div class="quick-access-card" role="region" aria-labelledby="quickAccessTitle">
+        <h3 id="quickAccessTitle">Acceso Rápido</h3>
         <p class="text-muted mb-4">Navega directamente a cada sección del panel.</p>
         <div class="quick-grid">
-          <button class="quick-btn" (click)="nav('usuarios')">
-            <i class="bi bi-people-fill"></i>
+          <button id="quickNavUsersBtn" class="quick-btn" (click)="nav('usuarios')" aria-label="Navegar a Usuarios">
+            <i class="bi bi-people-fill" aria-hidden="true"></i>
             <span>Usuarios</span>
           </button>
-          <button class="quick-btn" (click)="nav('productos')">
-            <i class="bi bi-box-seam-fill"></i>
+          <button id="quickNavProdsBtn" class="quick-btn" (click)="nav('productos')" aria-label="Navegar a Productos">
+            <i class="bi bi-box-seam-fill" aria-hidden="true"></i>
             <span>Productos</span>
           </button>
-          <button class="quick-btn" (click)="nav('categorias')">
-            <i class="bi bi-tags-fill"></i>
+          <button id="quickNavCatsBtn" class="quick-btn" (click)="nav('categorias')" aria-label="Navegar a Categorías">
+            <i class="bi bi-tags-fill" aria-hidden="true"></i>
             <span>Categorías</span>
           </button>
-          <button class="quick-btn" (click)="nav('solicitudes')">
-            <i class="bi bi-file-earmark-text-fill"></i>
+          <button id="quickNavSolsBtn" class="quick-btn" (click)="nav('solicitudes')" aria-label="Navegar a Solicitudes">
+            <i class="bi bi-file-earmark-text-fill" aria-hidden="true"></i>
             <span>Solicitudes</span>
           </button>
-          <button class="quick-btn" (click)="nav('donaciones')">
-            <i class="bi bi-heart-fill"></i>
+          <button id="quickNavDonsBtn" class="quick-btn" (click)="nav('donaciones')" aria-label="Navegar a Donaciones">
+            <i class="bi bi-heart-fill" aria-hidden="true"></i>
             <span>Donaciones</span>
           </button>
-          <button class="quick-btn" (click)="nav('mensajes')">
-            <i class="bi bi-envelope-fill"></i>
+          <button id="quickNavMsgsBtn" class="quick-btn" (click)="nav('mensajes')" aria-label="Navegar a Mensajes">
+            <i class="bi bi-envelope-fill" aria-hidden="true"></i>
             <span>Mensajes</span>
           </button>
-          <button class="quick-btn" (click)="nav('perfil')">
-            <i class="bi bi-person-fill-gear"></i>
+          <button id="quickNavProfileBtn" class="quick-btn" (click)="nav('perfil')" aria-label="Navegar a Mi Perfil">
+            <i class="bi bi-person-fill-gear" aria-hidden="true"></i>
             <span>Perfil</span>
           </button>
         </div>

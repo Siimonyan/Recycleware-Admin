@@ -14,14 +14,14 @@ import { Donacion } from '../../interfaces/admin.interfaces';
       <p class="text-muted mb-4">Revisa y valida las donaciones de productos realizadas por los usuarios.</p>
 
       <div class="table-responsive">
-        <table class="premium-table">
+        <table class="premium-table" aria-label="Listado de donaciones de productos">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Donante</th>
-              <th>Fecha</th>
-              <th>Estado</th>
-              <th>Acciones</th>
+              <th scope="col">ID</th>
+              <th scope="col">Donante</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -37,27 +37,27 @@ import { Donacion } from '../../interfaces/admin.interfaces';
                 </td>
                 <td>
                   <div class="table-actions">
-                    <button class="action-btn info" (click)="viewInfo(d)" title="Ver Detalles">
-                      <i class="bi bi-info-circle-fill"></i>
+                    <button [id]="'viewDonBtn-' + d.id" class="action-btn info" (click)="viewInfo(d)" title="Ver Detalles" [attr.aria-label]="'Ver detalles de donación de ' + (d.donante?.nombre || 'anónimo')">
+                      <i class="bi bi-info-circle-fill" aria-hidden="true"></i>
                     </button>
                     
                     <!-- Acción: Volver a Pendiente (ID 1) -->
-                    <button (click)="changeStatus(d.id, 1)" class="action-btn state" title="Marcar como Pendiente">
-                      <i class="bi bi-clock-history"></i>
+                    <button [id]="'pendingDonBtn-' + d.id" (click)="changeStatus(d.id, 1)" class="action-btn state" title="Marcar como Pendiente" [attr.aria-label]="'Marcar como pendiente donación de ' + (d.donante?.nombre || 'anónimo')">
+                      <i class="bi bi-clock-history" aria-hidden="true"></i>
                     </button>
 
                     <!-- Acción: En Recogida (ID 2) -->
-                    <button (click)="changeStatus(d.id, 2)" class="action-btn info" title="Marcar En Recogida">
-                      <i class="bi bi-truck"></i>
+                    <button [id]="'collectDonBtn-' + d.id" (click)="changeStatus(d.id, 2)" class="action-btn info" title="Marcar En Recogida" [attr.aria-label]="'Marcar en recogida donación de ' + (d.donante?.nombre || 'anónimo')">
+                      <i class="bi bi-truck" aria-hidden="true"></i>
                     </button>
 
                     <!-- Acción: Recibido (Aprobar) (ID 3) -->
-                    <button (click)="changeStatus(d.id, 3)" class="action-btn approve" title="Marcar como Recibida">
-                      <i class="bi bi-check-circle-fill"></i>
+                    <button [id]="'receiveDonBtn-' + d.id" (click)="changeStatus(d.id, 3)" class="action-btn approve" title="Marcar como Recibida" [attr.aria-label]="'Marcar como recibida donación de ' + (d.donante?.nombre || 'anónimo')">
+                      <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
                     </button>
 
-                    <button (click)="deleteDonation(d.id)" class="action-btn delete" title="Eliminar">
-                      <i class="bi bi-trash-fill"></i>
+                    <button [id]="'deleteDonBtn-' + d.id" (click)="deleteDonation(d.id)" class="action-btn delete" title="Eliminar" [attr.aria-label]="'Eliminar registro de donación de ' + (d.donante?.nombre || 'anónimo')">
+                      <i class="bi bi-trash-fill" aria-hidden="true"></i>
                     </button>
                   </div>
                 </td>
@@ -69,34 +69,34 @@ import { Donacion } from '../../interfaces/admin.interfaces';
     </div>
 
     <!-- Modal de Información -->
-    <div class="modal-overlay" *ngIf="showInfoModal">
+    <div class="modal-overlay" *ngIf="showInfoModal" role="dialog" aria-labelledby="donModalTitle">
        <div class="modal-content animate-fade-in">
-          <h3>Detalles de la Donación</h3>
+          <h3 id="donModalTitle">Detalles de la Donación</h3>
           
           <div class="info-section">
-            <label>Donante</label>
-            <p class="font-bold">{{ selectedInfoItem?.donante?.nombre || 'Anónimo' }}</p>
+            <label id="donanteLabel">Donante</label>
+            <p class="font-bold" aria-labelledby="donanteLabel">{{ selectedInfoItem?.donante?.nombre || 'Anónimo' }}</p>
           </div>
 
           <div class="info-section">
-            <label>Fecha de Registro</label>
-            <p class="font-bold">{{ selectedInfoItem?.fechaDonacion | date:'fullDate' }}</p>
+            <label id="fechaLabel">Fecha de Registro</label>
+            <p class="font-bold" aria-labelledby="fechaLabel">{{ selectedInfoItem?.fechaDonacion | date:'fullDate' }}</p>
           </div>
 
           <div class="info-section">
-            <label>Descripción del Material</label>
-            <div class="reason-box">
+            <label id="descLabel">Descripción del Material</label>
+            <div class="reason-box" role="textbox" aria-labelledby="descLabel" readonly>
               <p>{{ selectedInfoItem?.descripcion }}</p>
             </div>
           </div>
 
           <div class="info-section" *ngIf="selectedInfoItem?.cantidadProductos">
-            <label>Cantidad aproximada</label>
-            <p class="font-bold">{{ selectedInfoItem?.cantidadProductos }} unidades</p>
+            <label id="qtyLabel">Cantidad aproximada</label>
+            <p class="font-bold" aria-labelledby="qtyLabel">{{ selectedInfoItem?.cantidadProductos }} unidades</p>
           </div>
           
           <div class="modal-actions">
-            <button class="btn-primary w-100" (click)="showInfoModal = false">Cerrar</button>
+            <button id="closeDonModalBtn" class="btn-primary w-100" (click)="showInfoModal = false">Cerrar</button>
           </div>
        </div>
     </div>

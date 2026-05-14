@@ -19,46 +19,46 @@ import { timeout } from 'rxjs';
       <form (ngSubmit)="saveProfile()" *ngIf="user">
         <div class="form-grid">
           <div class="form-group">
-            <label>Nombre Completo</label>
-            <input type="text" class="form-control" [(ngModel)]="user.nombre" name="nombre">
+            <label for="profileName">Nombre Completo</label>
+            <input id="profileName" type="text" class="form-control" [(ngModel)]="user.nombre" name="nombre">
           </div>
           <div class="form-group">
-            <label>Correo Electrónico</label>
-            <input type="email" class="form-control" [(ngModel)]="user.correo" name="correo">
+            <label for="profileEmail">Correo Electrónico</label>
+            <input id="profileEmail" type="email" class="form-control" [(ngModel)]="user.correo" name="correo">
           </div>
           <div class="form-group">
-            <label>Teléfono</label>
-            <input type="text" class="form-control" [(ngModel)]="user.telefono" name="telefono">
+            <label for="profilePhone">Teléfono</label>
+            <input id="profilePhone" type="text" class="form-control" [(ngModel)]="user.telefono" name="telefono">
           </div>
           <div class="form-group">
-            <label>DNI</label>  
-            <input type="text" class="form-control" [(ngModel)]="user.dni" name="dni" readonly>
-            <small class="text-muted d-block mt-1">El DNI no se puede modificar.</small>
+            <label for="profileDni">DNI</label>  
+            <input id="profileDni" type="text" class="form-control" [(ngModel)]="user.dni" name="dni" readonly aria-describedby="dniHelp">
+            <small id="dniHelp" class="text-muted d-block mt-1">El DNI no se puede modificar.</small>
           </div>
           <div class="form-group">
-            <label>Dirección</label>
-            <input type="text" class="form-control" [(ngModel)]="user.direccion" name="direccion">
+            <label for="profileAddress">Dirección</label>
+            <input id="profileAddress" type="text" class="form-control" [(ngModel)]="user.direccion" name="direccion">
           </div>
           <div class="form-group">
-            <label>Localidad</label>
-            <input type="text" class="form-control" [(ngModel)]="user.localidad" name="localidad">
+            <label for="profileLoc">Localidad</label>
+            <input id="profileLoc" type="text" class="form-control" [(ngModel)]="user.localidad" name="localidad">
           </div>
           <div class="form-group">
-            <label>Código Postal</label>
-            <input type="text" class="form-control" [(ngModel)]="user.codigoPostal" name="cp">
+            <label for="profileCp">Código Postal</label>
+            <input id="profileCp" type="text" class="form-control" [(ngModel)]="user.codigoPostal" name="cp">
           </div>
         </div>
 
         <div class="footer-actions">
-          <button type="submit" class="btn-primary" [disabled]="saving">
-            <i class="bi bi-save me-2"></i>
+          <button id="saveProfileBtn" type="submit" class="btn-primary" [disabled]="saving">
+            <i class="bi bi-save me-2" aria-hidden="true"></i>
             {{ saving ? 'Guardando...' : 'Guardar Cambios' }}
           </button>
         </div>
       </form>
 
-      <div *ngIf="successMsg" class="success-alert animate-fade-in">
-        <i class="bi bi-check-circle-fill me-2"></i>
+      <div *ngIf="successMsg" class="success-alert animate-fade-in" role="alert" aria-live="polite">
+        <i class="bi bi-check-circle-fill me-2" aria-hidden="true"></i>
         {{ successMsg }}
       </div>
     </div>

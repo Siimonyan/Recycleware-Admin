@@ -14,14 +14,14 @@ import { Solicitud } from '../../interfaces/admin.interfaces';
       <p class="text-muted mb-4">Gestiona las peticiones de los usuarios para adquirir productos reciclados.</p>
 
       <div class="table-responsive">
-        <table class="premium-table">
+        <table class="premium-table" aria-label="Listado de solicitudes de productos">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Solicitante</th>
-              <th>Producto</th>
-              <th>Estado</th>
-              <th>Acciones</th>
+              <th scope="col">ID</th>
+              <th scope="col">Solicitante</th>
+              <th scope="col">Producto</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -44,23 +44,28 @@ import { Solicitud } from '../../interfaces/admin.interfaces';
                 </td>
                 <td>
                   <div class="table-actions">
-                    <button class="action-btn" (click)="viewInfo(s)" title="Ver Motivo">
-                      <i class="bi bi-info-circle-fill"></i>
+                    <button [id]="'viewSolBtn-' + s.id" class="action-btn" (click)="viewInfo(s)" title="Ver Motivo" [attr.aria-label]="'Ver motivo de solicitud de ' + s.applicant?.nombre">
+                      <i class="bi bi-info-circle-fill" aria-hidden="true"></i>
                     </button>
                     
                     <!-- Acción: En Revisión (ID 2) -->
-                    <button class="action-btn btn-info" (click)="changeStatus(s.id, 2)" title="Poner En Revisión">
-                      <i class="bi bi-eye-fill"></i>
+                    <button [id]="'reviewSolBtn-' + s.id" class="action-btn btn-info" (click)="changeStatus(s.id, 2)" title="Poner En Revisión" [attr.aria-label]="'Poner en revisión solicitud de ' + s.applicant?.nombre">
+                      <i class="bi bi-eye-fill" aria-hidden="true"></i>
                     </button>
 
                     <!-- Acción: Aprobar (ID 3) -->
-                    <button class="action-btn btn-approve" (click)="changeStatus(s.id, 3)" title="Aprobar">
-                      <i class="bi bi-check-circle-fill"></i>
+                    <button [id]="'approveSolBtn-' + s.id" class="action-btn btn-approve" (click)="changeStatus(s.id, 3)" title="Aprobar" [attr.aria-label]="'Aprobar solicitud de ' + s.applicant?.nombre">
+                      <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
                     </button>
                     
                     <!-- Acción: Rechazar (ID 4) -->
-                    <button class="action-btn btn-reject" (click)="changeStatus(s.id, 4)" title="Rechazar">
-                      <i class="bi bi-x-circle-fill"></i>
+                    <button [id]="'rejectSolBtn-' + s.id" class="action-btn btn-reject" (click)="changeStatus(s.id, 4)" title="Rechazar" [attr.aria-label]="'Rechazar solicitud de ' + s.applicant?.nombre">
+                      <i class="bi bi-x-circle-fill" aria-hidden="true"></i>
+                    </button>
+
+                    <!-- Acción: Eliminar -->
+                    <button [id]="'deleteSolBtn-' + s.id" class="action-btn delete" (click)="deleteSolicitud(s.id)" title="Eliminar Permanente" [attr.aria-label]="'Eliminar solicitud ' + s.id">
+                      <i class="bi bi-trash-fill" aria-hidden="true"></i>
                     </button>
                   </div>
                 </td>
@@ -72,30 +77,30 @@ import { Solicitud } from '../../interfaces/admin.interfaces';
     </div>
 
     <!-- Modal de Información -->
-    <div class="modal-overlay" *ngIf="showInfoModal">
+    <div class="modal-overlay" *ngIf="showInfoModal" role="dialog" aria-labelledby="solModalTitle">
        <div class="modal-content animate-fade-in">
-          <h3>Detalles de la Solicitud</h3>
+          <h3 id="solModalTitle">Detalles de la Solicitud</h3>
           
           <div class="info-section">
-            <label>Solicitante</label>
-            <p class="font-bold">{{ selectedInfoItem?.applicant?.nombre }}</p>
-            <p class="text-xs">{{ selectedInfoItem?.applicant?.correo }}</p>
+            <label id="applicantLabel">Solicitante</label>
+            <p class="font-bold" aria-labelledby="applicantLabel">{{ selectedInfoItem?.applicant?.nombre }}</p>
+            <p class="text-xs" aria-labelledby="applicantLabel">{{ selectedInfoItem?.applicant?.correo }}</p>
           </div>
 
           <div class="info-section">
-            <label>Producto Solicitado</label>
-            <p class="font-bold">{{ selectedInfoItem?.product?.nombre }}</p>
+            <label id="productLabel">Producto Solicitado</label>
+            <p class="font-bold" aria-labelledby="productLabel">{{ selectedInfoItem?.product?.nombre }}</p>
           </div>
 
           <div class="info-section">
-            <label>Motivo de la Petición</label>
-            <div class="reason-box">
+            <label id="reasonLabel">Motivo de la Petición</label>
+            <div class="reason-box" role="textbox" aria-labelledby="reasonLabel" readonly>
               <p>{{ selectedInfoItem?.reason }}</p>
             </div>
           </div>
           
           <div class="modal-actions">
-            <button class="btn-primary w-100" (click)="showInfoModal = false">Cerrar</button>
+            <button id="closeSolModalBtn" class="btn-primary w-100" (click)="showInfoModal = false">Cerrar</button>
           </div>
        </div>
     </div>
@@ -145,6 +150,18 @@ export class SolicitudesComponent implements OnInit {
     
     if (confirm(`¿Estás seguro de que deseas ${action} esta solicitud?`)) {
       this.apiService.updateSolicitudEstado(id, idEstado).subscribe(() => this.loadSolicitudes());
+    }
+  }
+
+  deleteSolicitud(id: number) {
+    if (confirm('¿Estás seguro de que deseas eliminar permanentemente esta solicitud?')) {
+      this.apiService.deleteSolicitud(id).subscribe({
+        next: () => this.loadSolicitudes(),
+        error: (err) => {
+          console.error('Error al eliminar solicitud:', err);
+          alert('No se pudo eliminar la solicitud.');
+        }
+      });
     }
   }
 }

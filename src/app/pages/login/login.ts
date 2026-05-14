@@ -34,10 +34,11 @@ import { Router } from '@angular/router';
 
               <form (ngSubmit)="onLogin()" #loginForm="ngForm">
                 <div class="input-group">
-                  <label>Correo Electrónico</label>
+                  <label for="adminEmail">Correo Electrónico</label>
                   <div class="input-wrapper">
                     <i class="bi bi-envelope"></i>
                     <input 
+                      id="adminEmail"
                       type="email" 
                       name="email" 
                       [(ngModel)]="email" 
@@ -48,10 +49,11 @@ import { Router } from '@angular/router';
                 </div>
 
                 <div class="input-group">
-                  <label>Contraseña</label>
+                  <label for="adminPassword">Contraseña</label>
                   <div class="input-wrapper">
                     <i class="bi bi-lock"></i>
                     <input 
+                      id="adminPassword"
                       type="password" 
                       name="password" 
                       [(ngModel)]="password" 
@@ -61,14 +63,16 @@ import { Router } from '@angular/router';
                   </div>
                 </div>
 
-                <div *ngIf="error" class="error-alert animate-fade-in">
+                <div *ngIf="error" class="error-alert animate-fade-in" role="alert" aria-live="assertive">
                   <i class="bi bi-exclamation-triangle-fill"></i>
                   <span>{{ error }}</span>
                 </div>
 
-                <button type="submit" class="btn-login" [disabled]="loading || !loginForm.form.valid">
+                <button id="loginSubmitBtn" type="submit" class="btn-login" [disabled]="loading || !loginForm.form.valid">
                   <span *ngIf="!loading">Iniciar Sesión</span>
-                  <div *ngIf="loading" class="spinner-border spinner-border-sm text-light"></div>
+                  <div *ngIf="loading" class="spinner-border spinner-border-sm text-light" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                  </div>
                 </button>
               </form>
               

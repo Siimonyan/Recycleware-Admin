@@ -13,20 +13,20 @@ import { FormsModule } from '@angular/forms';
     <div class="premium-card">
       <div class="table-header">
         <h3>Gestión de Categorías</h3>
-        <button class="btn-primary" (click)="showModal = true">
-          <i class="bi bi-plus-lg me-2"></i>
+        <button id="newCategoryBtn" class="btn-primary" (click)="showModal = true" aria-label="Añadir nueva categoría">
+          <i class="bi bi-plus-lg me-2" aria-hidden="true"></i>
           Nueva Categoría
         </button>
       </div>
 
       <div class="table-responsive">
-        <table class="premium-table">
+        <table class="premium-table" aria-label="Listado de categorías de productos">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th class="text-center">Artículos</th>
-              <th class="text-end">Acciones</th>
+              <th scope="col">ID</th>
+              <th scope="col">Nombre</th>
+              <th scope="col" class="text-center">Artículos</th>
+              <th scope="col" class="text-end">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -34,15 +34,15 @@ import { FormsModule } from '@angular/forms';
               <td><span class="text-muted">#{{ c.id }}</span></td>
               <td><span class="font-bold">{{ c.nombre }}</span></td>
               <td class="text-center">
-                <span class="count-badge">{{ getProductCount(c.id) }}</span>
+                <span class="count-badge" [attr.aria-label]="getProductCount(c.id) + ' productos en esta categoría'">{{ getProductCount(c.id) }}</span>
               </td>
               <td>
                 <div class="table-actions">
-                  <button class="action-btn" (click)="editCategory(c)" title="Editar">
-                    <i class="bi bi-pencil-fill"></i>
+                  <button [id]="'editCatBtn-' + c.id" class="action-btn" (click)="editCategory(c)" title="Editar" [attr.aria-label]="'Editar categoría ' + c.nombre">
+                    <i class="bi bi-pencil-fill" aria-hidden="true"></i>
                   </button>
-                  <button class="action-btn delete" (click)="deleteCategory(c.id)" title="Eliminar">
-                    <i class="bi bi-trash-fill"></i>
+                  <button [id]="'deleteCatBtn-' + c.id" class="action-btn delete" (click)="deleteCategory(c.id)" title="Eliminar" [attr.aria-label]="'Eliminar categoría ' + c.nombre">
+                    <i class="bi bi-trash-fill" aria-hidden="true"></i>
                   </button>
                 </div>
               </td>
@@ -53,19 +53,19 @@ import { FormsModule } from '@angular/forms';
     </div>
 
     <!-- Modal Categoría -->
-    <div class="modal-overlay" *ngIf="showModal">
+    <div class="modal-overlay" *ngIf="showModal" role="dialog" aria-labelledby="modalTitle">
        <div class="modal-content animate-fade-in">
-          <h3>{{ currentCategory.id ? 'Editar' : 'Nueva' }} Categoría</h3>
+          <h3 id="modalTitle">{{ currentCategory.id ? 'Editar' : 'Nueva' }} Categoría</h3>
           <p class="text-muted mb-4">Define el nombre de la categoría.</p>
           
           <div class="form-group">
-            <label>Nombre</label>
-            <input type="text" class="form-control" [(ngModel)]="currentCategory.nombre" placeholder="Ej: Electrónica, Muebles...">
+            <label for="catNameInput">Nombre</label>
+            <input id="catNameInput" type="text" class="form-control" [(ngModel)]="currentCategory.nombre" placeholder="Ej: Electrónica, Muebles...">
           </div>
           
           <div class="modal-actions">
-            <button class="btn btn-light" (click)="closeModal()">Cancelar</button>
-            <button class="btn-primary" (click)="saveCategory()">Guardar</button>
+            <button id="cancelCatBtn" class="btn btn-light" (click)="closeModal()">Cancelar</button>
+            <button id="saveCatBtn" class="btn-primary" (click)="saveCategory()" [disabled]="!currentCategory.nombre.trim()">Guardar</button>
           </div>
        </div>
     </div>
@@ -105,9 +105,16 @@ export class CategoriasComponent implements OnInit {
 
   saveCategory() {
     if (!this.currentCategory.nombre.trim()) return;
-    this.apiService.saveCategoria(this.currentCategory).subscribe(() => {
-      this.loadCategorias();
-      this.closeModal();
+    this.apiService.saveCategoria(this.currentCategory).subscribe({
+      next: () => {
+        this.loadCategorias();
+        this.closeModal();
+      },
+      error: (err) => {
+        console.error('Error al guardar categoría:', err);
+        const msg = err.error?.error || 'Hubo un error al guardar la categoría. Asegúrate de que el nombre no esté duplicado.';
+        alert(msg);
+      }
     });
   }
 

@@ -21,6 +21,10 @@ export class ApiService {
     return this.http.get<Mensaje[]>(`${this.baseUrl}/mensajes`, { withCredentials: true });
   }
 
+  responderMensaje(id: number, respuesta: string): Observable<any> {
+    return this.http.put(`${this.baseUrl}/mensajes/${id}`, { respuesta }, { withCredentials: true });
+  }
+
   // Usuarios
   getUsuarios(): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(`${this.baseUrl}/usuarios`, { withCredentials: true });
@@ -49,6 +53,14 @@ export class ApiService {
     if (categoria) params.categoria = categoria;
     if (estado) params.estado = estado;
     return this.http.get<Producto[]>(`${this.baseUrl}/productos`, { params, withCredentials: true });
+  }
+
+  getProductStates(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/productos/estados`, { withCredentials: true });
+  }
+
+  getProductAvailabilities(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/productos/disponibilidades`, { withCredentials: true });
   }
 
   saveProducto(producto: Partial<Producto>): Observable<Producto> {
@@ -91,6 +103,10 @@ export class ApiService {
 
   updateSolicitudEstado(id: number, idEstado: number): Observable<Solicitud> {
     return this.http.put<Solicitud>(`${this.baseUrl}/solicitudes/${id}/estado`, { idEstado }, { withCredentials: true });
+  }
+
+  deleteSolicitud(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/solicitudes/${id}`, { withCredentials: true });
   }
 
   // Donaciones
