@@ -266,7 +266,14 @@ export class ProductosComponent implements OnInit {
 
   deleteProduct(id: number) {
     if (confirm('¿Eliminar este producto?')) {
-      this.apiService.deleteProducto(id).subscribe(() => this.loadProductos());
+      this.apiService.deleteProducto(id).subscribe({
+        next: () => this.loadProductos(),
+        error: (err) => {
+          console.error('Error al eliminar producto:', err);
+          const msg = err.error?.error || 'No se pudo eliminar el producto. Puede tener solicitudes asociadas.';
+          alert(msg);
+        }
+      });
     }
   }
 
@@ -288,7 +295,6 @@ export class ProductosComponent implements OnInit {
     if (!img) return 'https://img.icons8.com/fluency/48/box.png';
     if (img.startsWith('http')) return img;
     if (img.startsWith('/api/images')) return `http://localhost:8080${img}`;
-    // Agregamos /api porque el backend tiene server.servlet.context-path=/api
     return `http://localhost:8080/api/uploads/productos/${img}`;
   }
 
