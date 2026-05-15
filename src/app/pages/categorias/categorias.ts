@@ -106,12 +106,7 @@ export class CategoriasComponent implements OnInit {
   saveCategory() {
     if (!this.currentCategory.nombre.trim()) return;
 
-    const categoryToSave = {
-      id: this.currentCategory.id,
-      nombre: this.currentCategory.nombre.trim()
-    };
-
-    this.apiService.saveCategoria(categoryToSave).subscribe({
+    this.apiService.saveCategoria(this.currentCategory).subscribe({
       next: () => {
         this.loadCategorias();
         this.closeModal();

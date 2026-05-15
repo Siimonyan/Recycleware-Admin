@@ -253,16 +253,7 @@ export class ProductosComponent implements OnInit {
       return;
     }
 
-    // Limpiamos los objetos anidados para que el backend reciba solo los IDs necesarios
-    // Esto evita errores si el nombre del objeto no coincide con el ID (inconsistencia)
-    const productToSave = {
-      ...this.currentProduct,
-      categoria: { id: this.currentProduct.categoria.id },
-      estado: { id: this.currentProduct.estado.id },
-      disponibilidad: { id: this.currentProduct.disponibilidad.id }
-    };
-
-    this.apiService.saveProducto(productToSave).subscribe({
+    this.apiService.saveProducto(this.currentProduct).subscribe({
       next: (res) => {
         if (this.selectedFiles.length > 0) {
           this.apiService.uploadProductoImagen(res.id, this.selectedFiles[0]).subscribe({
