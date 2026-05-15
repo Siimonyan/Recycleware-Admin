@@ -22,7 +22,7 @@
   height: 45px;
   border-radius: 0.5rem;
   object-fit: cover;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .font-bold {
@@ -52,9 +52,14 @@
   height: 10px;
   border-radius: 50%;
   margin-right: 8px;
-  
-  &.bg-green { background-color: $success; }
-  &.bg-red { background-color: $danger; }
+
+  &.bg-green {
+    background-color: $success;
+  }
+
+  &.bg-red {
+    background-color: $danger;
+  }
 }
 
 .table-actions {
@@ -107,7 +112,7 @@
   max-width: 600px;
   border-radius: 1.5rem;
   padding: 2rem;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
   max-height: 90vh;
   overflow-y: auto;
 
@@ -146,7 +151,7 @@
     &.is-invalid {
       border-color: $danger !important;
       background-color: rgba($danger, 0.05) !important;
-      
+
       &:focus {
         box-shadow: 0 0 0 4px rgba($danger, 0.1) !important;
       }
@@ -170,6 +175,14 @@
 }
 
 @media (max-width: 768px) {
-  .table-header { flex-direction: column; align-items: stretch; }
-  .search-box, .filters { max-width: none; width: 100%; }
+  .table-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-box,
+  .filters {
+    max-width: none;
+    width: 100%;
+  }
 }
