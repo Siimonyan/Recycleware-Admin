@@ -63,6 +63,11 @@ import { Solicitud } from '../../interfaces/admin.interfaces';
                       <i class="bi bi-x-circle-fill" aria-hidden="true"></i>
                     </button>
 
+                    <!-- Acción: Entregar (ID 5) -->
+                    <button [id]="'deliverSolBtn-' + s.id" class="action-btn btn-deliver" (click)="changeStatus(s.id, 5)" title="Marcar como Entregada" [attr.aria-label]="'Marcar como entregada solicitud de ' + s.applicant?.nombre">
+                      <i class="bi bi-box-seam-fill" aria-hidden="true"></i>
+                    </button>
+
                     <!-- Acción: Eliminar -->
                     <button [id]="'deleteSolBtn-' + s.id" class="action-btn delete" (click)="deleteSolicitud(s.id)" title="Eliminar Permanente" [attr.aria-label]="'Eliminar solicitud ' + s.id">
                       <i class="bi bi-trash-fill" aria-hidden="true"></i>
@@ -145,6 +150,7 @@ export class SolicitudesComponent implements OnInit {
       case 2: action = 'poner en revisión'; break;
       case 3: action = 'aprobar'; break;
       case 4: action = 'rechazar'; break;
+      case 5: action = 'marcar como entregada'; break;
       default: action = 'cambiar el estado de';
     }
     
