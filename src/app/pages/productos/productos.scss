@@ -142,7 +142,24 @@
       box-shadow: 0 0 0 4px rgba($secondary, 0.1);
       outline: none;
     }
+
+    &.is-invalid {
+      border-color: $danger !important;
+      background-color: rgba($danger, 0.05) !important;
+      
+      &:focus {
+        box-shadow: 0 0 0 4px rgba($danger, 0.1) !important;
+      }
+    }
   }
+}
+
+.invalid-feedback {
+  display: block;
+  color: $danger;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
 }
 
 .modal-actions {

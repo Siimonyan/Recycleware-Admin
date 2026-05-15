@@ -88,22 +88,25 @@ import { FormsModule } from '@angular/forms';
           <h3 id="productModalTitle">{{ editingProduct ? 'Editar' : 'Nuevo' }} Producto</h3>
           <p class="text-muted mb-4">Completa la información del producto.</p>
           
-          <div class="form-group">
-            <label for="prodNameInput">Nombre del Producto</label>
-            <input id="prodNameInput" type="text" class="form-control" [(ngModel)]="currentProduct.nombre">
+           <div class="form-group">
+            <label for="prodNameInput">Nombre del Producto *</label>
+            <input id="prodNameInput" type="text" class="form-control" [class.is-invalid]="formSubmitted && !currentProduct.nombre" [(ngModel)]="currentProduct.nombre" placeholder="Ej: Ratón Gaming">
+            <div class="invalid-feedback" *ngIf="formSubmitted && !currentProduct.nombre">El nombre es obligatorio</div>
           </div>
           
           <div class="form-group">
-            <label for="prodDescInput">Descripción</label>
-            <textarea id="prodDescInput" class="form-control" [(ngModel)]="currentProduct.descripcion" rows="3"></textarea>
+            <label for="prodDescInput">Descripción *</label>
+            <textarea id="prodDescInput" class="form-control" [class.is-invalid]="formSubmitted && !currentProduct.descripcion" [(ngModel)]="currentProduct.descripcion" rows="3" placeholder="Describe las características..."></textarea>
+            <div class="invalid-feedback" *ngIf="formSubmitted && !currentProduct.descripcion">La descripción es obligatoria</div>
           </div>
           
           <div class="form-group">
-            <label for="prodCatSelect">Categoría</label>
-            <select id="prodCatSelect" class="form-control" [(ngModel)]="currentProduct.categoria.id">
+            <label for="prodCatSelect">Categoría *</label>
+            <select id="prodCatSelect" class="form-control" [class.is-invalid]="formSubmitted && (!currentProduct.categoria || currentProduct.categoria.id === 0)" [(ngModel)]="currentProduct.categoria.id">
               <option value="0" disabled>Selecciona una categoría...</option>
               <option *ngFor="let cat of categorias" [value]="cat.id">{{ cat.nombre }}</option>
             </select>
+            <div class="invalid-feedback" *ngIf="formSubmitted && (!currentProduct.categoria || currentProduct.categoria.id === 0)">Debes seleccionar una categoría</div>
           </div>
           
            <div class="form-row">
@@ -168,6 +171,7 @@ export class ProductosComponent implements OnInit {
   };
   previewImages: string[] = [];
   selectedFiles: File[] = [];
+  formSubmitted = false;
   
   // Nuevos estados
   showImageModal = false;
@@ -241,17 +245,18 @@ export class ProductosComponent implements OnInit {
   }
 
    saveProduct() {
+    this.formSubmitted = true;
+    
+    // Validación básica
+    if (!this.currentProduct.nombre || !this.currentProduct.descripcion || !this.currentProduct.categoria.id || this.currentProduct.categoria.id === 0) {
+      return;
+    }
+
     this.apiService.saveProducto(this.currentProduct).subscribe((res) => {
       // Si hay un archivo nuevo seleccionado, lo subimos
       if (this.selectedFiles.length > 0) {
         this.apiService.uploadProductoImagen(res.id, this.selectedFiles[0]).subscribe({
           next: () => {
-            this.loadProductos();
-            this.closeModal();
-          },
-          error: (err) => {
-            console.error('Error al subir imagen:', err);
-            alert('Producto guardado, pero hubo un error al subir la imagen.');
             this.loadProductos();
             this.closeModal();
           }
@@ -280,6 +285,7 @@ export class ProductosComponent implements OnInit {
    closeModal() {
     this.showCreateModal = false;
     this.editingProduct = false;
+    this.formSubmitted = false;
     this.currentProduct = { 
       nombre: '', 
       descripcion: '', 
