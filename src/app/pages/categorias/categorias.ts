@@ -121,8 +121,15 @@ export class CategoriasComponent implements OnInit {
   }
 
   deleteCategory(id: number) {
-    if (confirm('¿Eliminar esta categoría? Se ocultarán los productos asociados.')) {
-      this.apiService.deleteCategoria(id).subscribe(() => this.loadCategorias());
+    if (confirm('¿Eliminar esta categoría?')) {
+      this.apiService.deleteCategoria(id).subscribe({
+        next: () => this.loadCategorias(),
+        error: (err) => {
+          console.error('Error al eliminar categoría:', err);
+          const msg = err.error?.error || err.error?.message || 'No se pudo eliminar la categoría. Puede que tenga productos asociados.';
+          alert(msg);
+        }
+      });
     }
   }
 
