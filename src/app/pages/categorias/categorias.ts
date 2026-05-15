@@ -99,20 +99,27 @@ export class CategoriasComponent implements OnInit {
   }
 
   editCategory(cat: Categoria) {
-    this.currentCategory = { ...cat };
+    this.currentCategory = JSON.parse(JSON.stringify(cat));
     this.showModal = true;
   }
 
   saveCategory() {
     if (!this.currentCategory.nombre.trim()) return;
-    this.apiService.saveCategoria(this.currentCategory).subscribe({
+
+    const categoryToSave = {
+      id: this.currentCategory.id,
+      nombre: this.currentCategory.nombre.trim()
+    };
+
+    this.apiService.saveCategoria(categoryToSave).subscribe({
       next: () => {
         this.loadCategorias();
         this.closeModal();
+        alert('Categoría guardada con éxito.');
       },
       error: (err) => {
         console.error('Error al guardar categoría:', err);
-        const msg = err.error?.error || 'Hubo un error al guardar la categoría. Asegúrate de que el nombre no esté duplicado.';
+        const msg = err.error?.error || err.error?.message || 'Hubo un error al guardar la categoría. Asegúrate de que el nombre no esté duplicado.';
         alert(msg);
       }
     });

@@ -211,10 +211,12 @@ export class ProductosComponent implements OnInit {
 
   editProduct(producto: Producto) {
     this.editingProduct = true;
-    this.currentProduct = { ...producto };
-     if (!this.currentProduct.categoria) this.currentProduct.categoria = { id: 0 };
+    this.currentProduct = JSON.parse(JSON.stringify(producto));
+    
+    if (!this.currentProduct.categoria) this.currentProduct.categoria = { id: 0 };
     if (!this.currentProduct.estado) this.currentProduct.estado = { id: 1 };
     if (!this.currentProduct.disponibilidad) this.currentProduct.disponibilidad = { id: 1 };
+    
     this.previewImages = [];
     if (this.currentProduct.imagenUrl) {
       this.previewImages.push(this.getProductImage(this.currentProduct.imagenUrl));
@@ -244,27 +246,48 @@ export class ProductosComponent implements OnInit {
     }
   }
 
-   saveProduct() {
+  saveProduct() {
     this.formSubmitted = true;
     
-    // Validación básica
     if (!this.currentProduct.nombre || !this.currentProduct.descripcion || !this.currentProduct.categoria.id || this.currentProduct.categoria.id === 0) {
       return;
     }
 
-    this.apiService.saveProducto(this.currentProduct).subscribe((res) => {
-      // Si hay un archivo nuevo seleccionado, lo subimos
-      if (this.selectedFiles.length > 0) {
-        this.apiService.uploadProductoImagen(res.id, this.selectedFiles[0]).subscribe({
-          next: () => {
-            this.loadProductos();
-            this.closeModal();
-          }
-        });
-      } else {
-        // Si no hay archivo nuevo, simplemente refrescamos (por si se borró la imagen anterior)
-        this.loadProductos();
-        this.closeModal();
+    // Limpiamos los objetos anidados para que el backend reciba solo los IDs necesarios
+    // Esto evita errores si el nombre del objeto no coincide con el ID (inconsistencia)
+    const productToSave = {
+      ...this.currentProduct,
+      categoria: { id: this.currentProduct.categoria.id },
+      estado: { id: this.currentProduct.estado.id },
+      disponibilidad: { id: this.currentProduct.disponibilidad.id }
+    };
+
+    this.apiService.saveProducto(productToSave).subscribe({
+      next: (res) => {
+        if (this.selectedFiles.length > 0) {
+          this.apiService.uploadProductoImagen(res.id, this.selectedFiles[0]).subscribe({
+            next: () => {
+              this.loadProductos();
+              this.closeModal();
+              alert('Producto guardado con éxito (incluyendo imagen).');
+            },
+            error: (err) => {
+              console.error('Error al subir imagen:', err);
+              alert('Producto guardado, pero no se pudo subir la imagen.');
+              this.loadProductos();
+              this.closeModal();
+            }
+          });
+        } else {
+          this.loadProductos();
+          this.closeModal();
+          alert('Producto guardado con éxito.');
+        }
+      },
+      error: (err) => {
+        console.error('Error al guardar producto:', err);
+        const errorMsg = err.error?.message || err.error?.error || 'Error desconocido al guardar.';
+        alert('No se pudo guardar el producto: ' + errorMsg);
       }
     });
   }
