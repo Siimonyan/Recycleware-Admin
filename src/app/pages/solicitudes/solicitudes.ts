@@ -116,7 +116,7 @@ export class SolicitudesComponent implements OnInit {
   showInfoModal = false;
   selectedInfoItem: Solicitud | null = null;
 
-  constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) {}
+  constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.loadSolicitudes();
@@ -132,6 +132,15 @@ export class SolicitudesComponent implements OnInit {
   viewInfo(solicitud: Solicitud) {
     this.selectedInfoItem = solicitud;
     this.showInfoModal = true;
+
+    if (solicitud.state?.id === 1) {
+      this.apiService.updateSolicitudEstado(solicitud.id, 2).subscribe({
+        next: () => {
+          this.loadSolicitudes();
+        },
+        error: (err) => console.error('Error al actualizar el estado a "En Revisión":', err)
+      });
+    }
   }
 
   getStatusClass(status: string) {
@@ -146,14 +155,14 @@ export class SolicitudesComponent implements OnInit {
 
   changeStatus(id: number, idEstado: number) {
     let action = '';
-    switch(idEstado) {
+    switch (idEstado) {
       case 2: action = 'poner en revisión'; break;
       case 3: action = 'aprobar'; break;
       case 4: action = 'rechazar'; break;
       case 5: action = 'marcar como entregada'; break;
       default: action = 'cambiar el estado de';
     }
-    
+
     if (confirm(`¿Estás seguro de que deseas ${action} esta solicitud?`)) {
       this.apiService.updateSolicitudEstado(id, idEstado).subscribe(() => this.loadSolicitudes());
     }
