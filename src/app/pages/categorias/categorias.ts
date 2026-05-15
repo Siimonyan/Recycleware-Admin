@@ -77,7 +77,7 @@ export class CategoriasComponent implements OnInit {
   showModal = false;
   currentCategory: any = { nombre: '' };
 
-  constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) {}
+  constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.loadCategorias();
