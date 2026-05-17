@@ -183,9 +183,18 @@ export class ProductosComponent implements OnInit {
 
    ngOnInit() {
     this.loadProductos();
-    this.apiService.getCategorias().subscribe(res => this.categorias = res);
-    this.apiService.getProductStates().subscribe(res => this.estados = res);
-    this.apiService.getProductAvailabilities().subscribe(res => this.disponibilidades = res);
+    this.apiService.getCategorias().subscribe(res => {
+      this.categorias = res;
+      this.cdr.detectChanges();
+    });
+    this.apiService.getProductStates().subscribe(res => {
+      this.estados = res;
+      this.cdr.detectChanges();
+    });
+    this.apiService.getProductAvailabilities().subscribe(res => {
+      this.disponibilidades = res;
+      this.cdr.detectChanges();
+    });
   }
 
   loadProductos() {
