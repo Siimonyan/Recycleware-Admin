@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
           <!-- Branding Section -->
           <div class="brand-section">
             <div class="brand-content">
-              <img src="assets/img/logo-entero.png" alt="RecycleWare Logo" class="brand-logo" onerror="this.src='https://img.icons8.com/fluency/96/recycle-sign.png';">
+              <img src="assets/img/logo.png" alt="RecycleWare Logo" class="brand-logo" onerror="this.src='https://img.icons8.com/fluency/96/recycle-sign.png';">
               <h1>Admin Dashboard</h1>
               <p>Gestiona eficientemente el ciclo de vida del reciclaje tecnológico.</p>
             </div>

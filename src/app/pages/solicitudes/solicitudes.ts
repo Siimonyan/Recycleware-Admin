@@ -178,7 +178,8 @@ export class SolicitudesComponent implements OnInit {
 
     if (solicitud.state?.id === 1) {
       this.apiService.updateSolicitudEstado(solicitud.id, 2).subscribe({
-        next: () => {
+        next: (updated) => {
+          this.selectedInfoItem = updated;
           this.loadSolicitudes();
         },
         error: (err) => console.error('Error al actualizar el estado a "En Revisión":', err)
