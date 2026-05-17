@@ -34,7 +34,6 @@
   color: $dark;
 }
 
-/* Badges de Rol */
 .badge {
   padding: 0.4rem 0.8rem;
   border-radius: 2rem;
@@ -76,7 +75,7 @@
   &.delete:hover { background-color: $danger; }
 }
 
-/* Modales */
+
 .modal-overlay {
   position: fixed;
   top: 0;

@@ -173,7 +173,7 @@ export class ProductosComponent implements OnInit {
   selectedFiles: File[] = [];
   formSubmitted = false;
   
-  // Nuevos estados
+
   showImageModal = false;
   selectedImage = '';
   showInfoModal = false;

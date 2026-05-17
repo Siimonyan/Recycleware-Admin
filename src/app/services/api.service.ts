@@ -43,7 +43,6 @@ export class ApiService {
   }
 
   updateProfile(usuario: Usuario): Observable<Usuario> {
-    // Usamos el endpoint general /usuario que permite actualizar al usuario autenticado
     return this.http.put<Usuario>(`http://localhost:8080/api/usuario`, usuario, { withCredentials: true });
   }
 

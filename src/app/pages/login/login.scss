@@ -11,7 +11,6 @@
   padding: 1rem;
 }
 
-/* Animated Background Shapes */
 .shape {
   position: absolute;
   border-radius: 50%;
@@ -90,7 +89,6 @@
 .brand-logo {
   max-width: 200px;
   margin-bottom: 2rem;
-  // filter removed to show original colors
 }
 
 .brand-content {
@@ -102,7 +100,7 @@
     font-weight: 800;
     margin-bottom: 1rem;
     line-height: 1.1;
-    color: $primary; // Dark blue for contrast
+    color: $primary;
   }
 
   p {
@@ -136,7 +134,7 @@
   }
 
   .subtitle {
-    color: $secondary; // Using brand teal for subtitle
+    color: $secondary;
     margin-bottom: 2.5rem;
     font-size: 0.95rem;
     font-weight: 600;
@@ -150,7 +148,7 @@
   label {
     display: block;
     margin-bottom: 0.6rem;
-    color: $dark; // High contrast
+    color: $dark;
     font-size: 0.85rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -202,7 +200,7 @@
   align-items: center;
   gap: 0.8rem;
   background-color: rgba($danger, 0.1);
-  color: darken($danger, 15%); // Darkened for contrast
+  color: darken($danger, 15%);
   padding: 1rem;
   border-radius: 1rem;
   margin-bottom: 1.5rem;

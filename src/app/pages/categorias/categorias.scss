@@ -19,10 +19,8 @@
 }
 
 .count-badge {
-  // background-color: rgba($primary, 0.08);
   color: $primary;
   padding: 0.4rem 1rem;
-  // border-radius: 2rem;
   font-weight: 700;
   font-size: 0.90rem;
 }
@@ -55,7 +53,6 @@
   &.delete:hover { background-color: $danger; }
 }
 
-/* Modal */
 .modal-overlay {
   position: fixed;
   top: 0;

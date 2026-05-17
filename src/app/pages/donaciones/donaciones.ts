@@ -140,13 +140,11 @@ export class DonacionesComponent implements OnInit {
 
   filteredDonaciones() {
     return this.donaciones.filter(d => {
-      // 1. Filtrar por término de búsqueda (nombre del donante o descripción de la donación)
       const donanteNombre = d.donante?.nombre || 'Donante Anónimo';
       const matchesSearch = !this.filterTerm ||
         (donanteNombre.toLowerCase().includes(this.filterTerm.toLowerCase())) ||
         (d.descripcion?.toLowerCase().includes(this.filterTerm.toLowerCase()));
 
-      // 2. Filtrar por estado
       const matchesEstado = !this.selectedEstado ||
         (d.estado?.nombre?.toLowerCase() === this.selectedEstado.toLowerCase());
 

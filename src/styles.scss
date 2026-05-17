@@ -39,7 +39,6 @@ h6 {
   font-weight: 700;
 }
 
-// Estilos globales de tarjetas "premium" (ahora estilo React)
 .premium-card {
   background-color: #ffffff;
   border: none;
@@ -54,7 +53,6 @@ h6 {
   }
 }
 
-// Botones personalizados
 .btn-primary {
   background-color: $primary;
   border: none;
@@ -86,7 +84,6 @@ h6 {
   }
 }
 
-// Tablas premium (estilo claro)
 .premium-table {
   width: 100%;
   border-collapse: separate;
@@ -132,7 +129,6 @@ h6 {
   }
 }
 
-// Badges de estado (estilo React)
 .badge {
   padding: 0.5em 1em;
   border-radius: 2rem;
@@ -160,7 +156,6 @@ h6 {
   }
 }
 
-// Animaciones
 .animate-fade-in {
   animation: fadeIn 0.4s ease-out;
 }

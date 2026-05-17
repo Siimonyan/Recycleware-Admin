@@ -147,13 +147,12 @@ export class SolicitudesComponent implements OnInit {
 
   filteredSolicitudes() {
     return this.solicitudes.filter(s => {
-      // 1. Filtrar por término de búsqueda (nombre del solicitante o nombre del producto)
       const matchesSearch = !this.filterTerm ||
         (s.applicant?.nombre?.toLowerCase().includes(this.filterTerm.toLowerCase())) ||
         (s.product?.nombre?.toLowerCase().includes(this.filterTerm.toLowerCase())) ||
         (s.applicant?.correo?.toLowerCase().includes(this.filterTerm.toLowerCase()));
 
-      // 2. Filtrar por estado
+
       const matchesEstado = !this.selectedEstado ||
         (s.state?.name?.toLowerCase() === this.selectedEstado.toLowerCase());
 

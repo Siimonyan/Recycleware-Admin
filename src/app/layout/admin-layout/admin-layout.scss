@@ -10,7 +10,6 @@
 .sidebar {
   width: 280px;
   background-color: $primary;
-  /* Fondo oscuro para contraste */
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -34,7 +33,6 @@
   width: 190px;
   height: auto;
   object-fit: contain;
-  /* Brillo opcional si el logo es oscuro, pero usualmente los logos premium destacan en fondo oscuro */
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
 }
 

@@ -27,7 +27,6 @@ export class AuthService {
           localStorage.setItem('admin_user', JSON.stringify(response));
           return of(response);
         } else {
-          // El usuario existe y la contraseña es correcta, pero no tiene rol ADMIN
           return throwError(() => ({ status: 403, error: { message: 'No tienes permisos de administrador' } }));
         }
       })
