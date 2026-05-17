@@ -40,7 +40,12 @@ import { FormsModule } from '@angular/forms';
           <tbody>
             <tr *ngFor="let u of filteredUsuarios()" class="animate-fade-in">
               <td><span class="text-muted">#{{ u.id }}</span></td>
-              <td><span class="font-bold">{{ u.nombre }}</span></td>
+              <td>
+                <span class="font-bold" [class.text-muted]="u.activo === false">
+                  {{ u.nombre }}
+                  <span *ngIf="u.activo === false" class="badge bg-danger ms-2" style="font-size: 0.7em;">Inactivo</span>
+                </span>
+              </td>
               <td>{{ u.correo }}</td>
               <td>
                 <span class="badge" [ngClass]="u.rol.toLowerCase()">{{ u.rol }}</span>
@@ -54,8 +59,8 @@ import { FormsModule } from '@angular/forms';
                   <button [id]="'roleUserBtn-' + u.id" (click)="openRoleModal(u)" class="action-btn role" title="Cambiar Rol" [attr.aria-label]="'Cambiar rol de ' + u.nombre">
                     <i class="bi bi-shield-lock-fill" aria-hidden="true"></i>
                   </button>
-                   <button *ngIf="u.id !== currentAdminId" [id]="'deleteUserBtn-' + u.id" (click)="deleteUsuario(u.id)" class="action-btn delete" title="Eliminar" [attr.aria-label]="'Eliminar usuario ' + u.nombre">
-                      <i class="bi bi-trash-fill" aria-hidden="true"></i>
+                   <button *ngIf="u.id !== currentAdminId" [id]="'deleteUserBtn-' + u.id" (click)="deleteUsuario(u)" class="action-btn" [ngClass]="u.activo !== false ? 'delete' : 'approve'" [title]="u.activo !== false ? 'Desactivar' : 'Reactivar'" [attr.aria-label]="(u.activo !== false ? 'Desactivar usuario ' : 'Reactivar usuario ') + u.nombre">
+                      <i class="bi" [ngClass]="u.activo !== false ? 'bi-trash-fill' : 'bi-arrow-counterclockwise'" aria-hidden="true"></i>
                    </button>
                 </div>
               </td>
@@ -197,13 +202,17 @@ export class UsuariosComponent implements OnInit {
     }
   }
 
-  deleteUsuario(id: number) {
-    if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-      this.apiService.deleteUsuario(id).subscribe({
-        next: () => this.loadUsuarios(),
+  deleteUsuario(u: Usuario) {
+    const isActivo = u.activo !== false;
+    const actionText = isActivo ? 'desactivar' : 'reactivar';
+    if (confirm(`¿Estás seguro de que deseas ${actionText} a este usuario?`)) {
+      this.apiService.deleteUsuario(u.id).subscribe({
+        next: () => {
+          this.loadUsuarios();
+        },
         error: (err) => {
-          console.error('Error al eliminar usuario:', err);
-          const msg = err.error?.error || 'No se pudo eliminar el usuario. Es posible que tenga registros asociados.';
+          console.error(`Error al ${actionText} usuario:`, err);
+          const msg = err.error?.error || `No se pudo ${actionText} el usuario.`;
           alert(msg);
         }
       });

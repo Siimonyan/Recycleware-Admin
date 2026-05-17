@@ -10,6 +10,7 @@ export interface Usuario {
   razonSocial?: string;
   nombreContacto?: string;
   rol: 'PARTICULAR' | 'EMPRESA' | 'ADMIN' | 'INVITADO';
+  activo?: boolean;
 }
 
 export interface Producto {
