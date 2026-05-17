@@ -93,7 +93,7 @@ import { FormsModule } from '@angular/forms';
           
           <div class="modal-actions">
             <button id="cancelEditUserBtn" class="btn btn-light" (click)="closeEditModal()">Cancelar</button>
-            <button id="saveEditUserBtn" class="btn-primary" (click)="saveUsuario()">Guardar Cambios</button>
+            <button id="saveEditUserBtn" class="btn btn-primary" (click)="saveUsuario()">Guardar Cambios</button>
           </div>
        </div>
     </div>

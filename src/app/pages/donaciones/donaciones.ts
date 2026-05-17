@@ -123,7 +123,7 @@ import { FormsModule } from '@angular/forms';
           </div>
           
           <div class="modal-actions">
-            <button id="closeDonModalBtn" class="btn-primary w-100" (click)="showInfoModal = false">Cerrar</button>
+            <button id="closeDonModalBtn" class="btn btn-primary w-100" (click)="showInfoModal = false">Cerrar</button>
           </div>
        </div>
     </div>

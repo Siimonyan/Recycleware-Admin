@@ -31,7 +31,7 @@
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     background-color: $fondo-secundario;
   }
 }
@@ -66,17 +66,32 @@
     justify-content: center;
     align-items: center;
     font-size: 1.8rem;
-    
-    &.users { background: rgba($info, 0.12); color: $info; }
-    &.products { background: rgba($success, 0.12); color: $success; }
-    &.requests { background: rgba($warning, 0.12); color: $warning; }
-    &.donations { background: rgba($secondary, 0.12); color: $secondary; }
+
+    &.users {
+      background: rgba($info, 0.12);
+      color: $info;
+    }
+
+    &.products {
+      background: rgba($success, 0.12);
+      color: $success;
+    }
+
+    &.requests {
+      background: rgba($warning, 0.12);
+      color: $warning;
+    }
+
+    &.donations {
+      background: rgba($secondary, 0.12);
+      color: $secondary;
+    }
   }
 
   .kpi-body {
     display: flex;
     flex-direction: column;
-    
+
     .kpi-label {
       font-size: 0.85rem;
       color: rgba($dark, 0.5);
@@ -84,7 +99,7 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    
+
     .kpi-value {
       font-size: 2rem;
       font-weight: 800;
@@ -99,7 +114,8 @@
   gap: 1.5rem;
 }
 
-.breakdown-card, .quick-access-card {
+.breakdown-card,
+.quick-access-card {
   background-color: #ffffff;
   border-radius: 1.5rem;
   padding: 2rem;
@@ -137,12 +153,26 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    
-    &.pend { background: $warning; }
-    &.rev { background: $info; }
-    &.appr { background: $success; }
-    &.deny { background: $danger; }
-    &.del { background: $primary; }
+
+    &.pend {
+      background: $warning;
+    }
+
+    &.rev {
+      background: $info;
+    }
+
+    &.appr {
+      background: $success;
+    }
+
+    &.deny {
+      background: $danger;
+    }
+
+    &.del {
+      background: $primary;
+    }
   }
 
   .bd-bar-wrap {
@@ -201,10 +231,17 @@
 }
 
 @media (max-width: 900px) {
-  .dashboard-bottom { grid-template-columns: 1fr; }
-  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .dashboard-bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (max-width: 480px) {
-  .kpi-grid { grid-template-columns: 1fr; }
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
 }

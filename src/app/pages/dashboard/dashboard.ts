@@ -173,7 +173,7 @@ export class DashboardComponent implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadStats();
@@ -237,12 +237,12 @@ export class DashboardComponent implements OnInit {
     ];
 
     const csv = rows.map(r => r.map(c => `"${c}"`).join(';')).join('\n');
-    const bom = '\uFEFF'; 
+    const bom = '\uFEFF';
     const blob = new Blob([bom + csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `recycleware_estadisticas_${new Date().toISOString().slice(0,10)}.csv`;
+    link.download = `recycleware_estadisticas_${new Date().toISOString().slice(0, 10)}.csv`;
     link.click();
     URL.revokeObjectURL(url);
   }
