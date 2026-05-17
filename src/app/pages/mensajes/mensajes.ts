@@ -120,15 +120,18 @@ export class MensajesComponent implements OnInit {
   sendResponse() {
     if (!this.respuesta.trim()) return;
     this.sending = true;
+    this.cdr.detectChanges();
     
     this.apiService.responderMensaje(this.currentMsg.id, this.respuesta).subscribe({
       next: () => {
         this.sending = false;
         this.loadMensajes();
         this.closeModal();
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.sending = false;
+        this.cdr.detectChanges();
         console.error('Error al enviar respuesta:', err);
         alert('Error al enviar la respuesta. Inténtalo de nuevo.');
       }
