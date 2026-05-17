@@ -207,8 +207,8 @@
 
 .btn-login {
   width: 100%;
-  background-color: #bef264; // Lime color (Tailwind Lime-300)
-  color: $primary; // Dark text on light background for contrast
+  background-color: $primary;
+  color: white;
   border: none;
   padding: 1.1rem;
   border-radius: 1rem;
@@ -223,8 +223,8 @@
 
   &:hover:not(:disabled) {
     transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(190, 242, 100, 0.4);
-    background-color: #d9f99d; // Lighter lime
+    box-shadow: 0 15px 30px rgba($primary, 0.3);
+    background-color: lighten($primary, 8%);
   }
 
   &:disabled {
