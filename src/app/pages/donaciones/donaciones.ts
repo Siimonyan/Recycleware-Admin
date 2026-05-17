@@ -25,10 +25,10 @@ import { FormsModule } from '@angular/forms';
           <label for="stateFilterSelect" class="visually-hidden">Filtrar por estado</label>
           <select id="stateFilterSelect" class="form-control" [(ngModel)]="selectedEstado">
             <option value="">Todos los Estados</option>
-            <option value="Pendiente">Pendiente</option>
-            <option value="En Recogida">En Recogida</option>
-            <option value="Recibido">Recibido</option>
-            <option value="Procesado">Procesado</option>
+            <option value="Pendiente">PENDIENTE</option>
+            <option value="En Recogida">EN RECOGIDA</option>
+            <option value="Recibido">RECIBIDO</option>
+            <option value="Procesado">PROCESADO</option>
           </select>
         </div>
         <button id="refreshDonsBtn" class="btn btn-primary" (click)="loadDonaciones()" aria-label="Actualizar lista de donaciones">
@@ -59,7 +59,7 @@ import { FormsModule } from '@angular/forms';
                 <td>{{ d.fechaDonacion | date:'dd/MM/yyyy' }}</td>
                 <td>
                   <span class="badge" [ngClass]="getStatusClass(d.estado?.nombre || '')">
-                    {{ d.estado?.nombre || 'Pendiente' }}
+                    {{ (d.estado?.nombre || 'Pendiente') | uppercase }}
                   </span>
                 </td>
                 <td>

@@ -13,6 +13,7 @@
     color: $dark;
     margin: 0;
   }
+
   .text-xs {
     font-size: 0.8rem;
     color: rgba($dark, 0.4);
@@ -37,11 +38,26 @@
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  
-  &.pend { background-color: rgba($warning, 0.15); color: darken($warning, 15%); }
-  &.aprob { background-color: rgba($success, 0.15); color: darken($success, 10%); }
-  &.rech { background-color: rgba($danger, 0.15); color: darken($danger, 5%); }
-  &.rev { background-color: rgba($info, 0.15); color: darken($info, 10%); }
+
+  &.pend {
+    background-color: rgba($warning, 0.15);
+    color: darken($warning, 15%);
+  }
+
+  &.aprob {
+    background-color: rgba($success, 0.15);
+    color: darken($success, 10%);
+  }
+
+  &.rech {
+    background-color: rgba($danger, 0.15);
+    color: darken($danger, 5%);
+  }
+
+  &.rev {
+    background-color: rgba($info, 0.15);
+    color: darken($info, 10%);
+  }
 }
 
 .table-actions {
@@ -68,9 +84,17 @@
     transform: translateY(-2px);
   }
 
-  &.btn-approve:hover { background-color: $success; }
-  &.btn-reject:hover { background-color: $danger; }
-  &.btn-deliver:hover { background-color: $secondary; }
+  &.btn-approve:hover {
+    background-color: $success;
+  }
+
+  &.btn-reject:hover {
+    background-color: $danger;
+  }
+
+  &.btn-deliver:hover {
+    background-color: $secondary;
+  }
 }
 
 /* Modal */
@@ -94,7 +118,7 @@
   max-width: 500px;
   border-radius: 1.5rem;
   padding: 2.5rem;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
 
   h3 {
     font-size: 1.5rem;
@@ -105,7 +129,7 @@
 
 .info-section {
   margin-bottom: 1.5rem;
-  
+
   label {
     display: block;
     font-size: 0.7rem;
@@ -121,7 +145,7 @@
     border-radius: 1rem;
     padding: 1.2rem;
     margin-top: 0.5rem;
-    
+
     p {
       margin: 0;
       color: rgba($dark, 0.7);
@@ -141,31 +165,35 @@
   .search-box {
     flex: 1;
     max-width: 450px;
-    
+
     .input-group {
       background-color: $fondo-secundario;
       border-radius: 0.75rem;
       padding: 0 1rem;
       display: flex;
       align-items: center;
-      
-      i { color: rgba($dark, 0.4); }
-      
+
+      i {
+        color: rgba($dark, 0.4);
+      }
+
       .form-control {
         background: transparent;
         border: none;
         padding: 0.8rem 0.5rem;
         box-shadow: none;
         outline: none;
-        
-        &:focus { box-shadow: none; }
+
+        &:focus {
+          box-shadow: none;
+        }
       }
     }
   }
 
   .filters {
     width: 200px;
-    
+
     .form-control {
       background-color: $fondo-secundario;
       border: 1px solid transparent;
@@ -188,6 +216,7 @@
     flex-direction: column;
     align-items: stretch;
   }
+
   .table-header .search-box,
   .table-header .filters {
     max-width: none;

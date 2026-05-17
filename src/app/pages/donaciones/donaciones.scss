@@ -29,10 +29,21 @@
     transform: translateY(-2px);
   }
 
-  &.info:hover { background-color: $info; }
-  &.state:hover { background-color: $warning; }
-  &.approve:hover { background-color: $success; }
-  &.delete:hover { background-color: $danger; }
+  &.info:hover {
+    background-color: $info;
+  }
+
+  &.state:hover {
+    background-color: $warning;
+  }
+
+  &.approve:hover {
+    background-color: $success;
+  }
+
+  &.delete:hover {
+    background-color: $danger;
+  }
 }
 
 /* Modales */
@@ -56,7 +67,7 @@
   max-width: 500px;
   border-radius: 1.5rem;
   padding: 2.5rem;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
 
   h3 {
     font-size: 1.5rem;
@@ -83,7 +94,7 @@
   background-color: $fondo-secundario;
   border-radius: 1rem;
   padding: 1.2rem;
-  
+
   p {
     margin: 0;
     font-size: 0.95rem;
@@ -102,31 +113,35 @@
   .search-box {
     flex: 1;
     max-width: 450px;
-    
+
     .input-group {
       background-color: $fondo-secundario;
       border-radius: 0.75rem;
       padding: 0 1rem;
       display: flex;
       align-items: center;
-      
-      i { color: rgba($dark, 0.4); }
-      
+
+      i {
+        color: rgba($dark, 0.4);
+      }
+
       .form-control {
         background: transparent;
         border: none;
         padding: 0.8rem 0.5rem;
         box-shadow: none;
         outline: none;
-        
-        &:focus { box-shadow: none; }
+
+        &:focus {
+          box-shadow: none;
+        }
       }
     }
   }
 
   .filters {
     width: 200px;
-    
+
     .form-control {
       background-color: $fondo-secundario;
       border: 1px solid transparent;
@@ -149,6 +164,7 @@
     flex-direction: column;
     align-items: stretch;
   }
+
   .table-header .search-box,
   .table-header .filters {
     max-width: none;

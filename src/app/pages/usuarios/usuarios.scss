@@ -42,9 +42,9 @@
   font-weight: 700;
   text-transform: uppercase;
   
-  &.admin { background-color: rgba($primary, 0.1); color: $primary; }
-  &.particular { background-color: rgba($info, 0.1); color: $info; }
-  &.empresa { background-color: rgba($warning, 0.1); color: darken($warning, 15%); }
+  &.admin { background-color: rgba($danger, 0.1); color: $danger; }
+  &.empresa { background-color: rgba($info, 0.1); color: $info; }
+  &.particular { background-color: rgba($secondary, 0.1); color: $secondary; }
 }
 
 .table-actions {

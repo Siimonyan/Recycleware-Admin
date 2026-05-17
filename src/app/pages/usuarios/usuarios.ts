@@ -113,7 +113,7 @@ import { FormsModule } from '@angular/forms';
           
           <div class="modal-actions">
             <button id="cancelRoleBtn" class="btn btn-light" (click)="closeRoleModal()">Cancelar</button>
-            <button id="saveRoleBtn" class="btn-primary" (click)="saveRole()">Asignar Rol</button>
+            <button id="saveRoleBtn" class="btn btn-primary" (click)="saveRole()">Asignar Rol</button>
           </div>
        </div>
     </div>
