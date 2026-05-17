@@ -323,8 +323,8 @@ export class ProductosComponent implements OnInit {
   getProductImage(img: string | undefined): string {
     if (!img) return 'https://img.icons8.com/fluency/48/box.png';
     if (img.startsWith('http')) return img;
-    if (img.startsWith('/api/images')) return `http://localhost:8080${img}`;
-    return `http://localhost:8080/api/uploads/productos/${img}`;
+    if (img.startsWith('/api/images')) return `${img}`;
+    return `/api/uploads/productos/${img}`;
   }
 
   handleImgError(event: any) {

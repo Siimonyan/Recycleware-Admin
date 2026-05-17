@@ -7,7 +7,7 @@ import { Usuario, Producto, Categoria, Solicitud, Donacion, Mensaje } from '../i
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = 'http://localhost:8080/api/admin';
+  private baseUrl = '/api/admin';
 
   constructor(private http: HttpClient) {}
 
@@ -43,7 +43,7 @@ export class ApiService {
   }
 
   updateProfile(usuario: Usuario): Observable<Usuario> {
-    return this.http.put<Usuario>(`http://localhost:8080/api/usuario`, usuario, { withCredentials: true });
+    return this.http.put<Usuario>(`/api/usuario`, usuario, { withCredentials: true });
   }
 
   // Productos
