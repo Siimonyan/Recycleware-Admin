@@ -28,7 +28,10 @@ import { Donacion } from '../../interfaces/admin.interfaces';
             <ng-container *ngFor="let d of donaciones">
               <tr *ngIf="d && d.id" class="animate-fade-in">
                 <td><span class="text-muted">#{{ d.id }}</span></td>
-                <td><span class="font-bold">{{ d.donante?.nombre || 'Donante Anónimo' }}</span></td>
+                <td>
+                  <span class="font-bold">{{ d.donante?.nombre || 'Donante Anónimo' }}</span>
+                  <span *ngIf="d.esAnonimo" class="badge bg-secondary ms-2" style="font-size: 0.7em;">Privado</span>
+                </td>
                 <td>{{ d.fechaDonacion | date:'dd/MM/yyyy' }}</td>
                 <td>
                   <span class="badge" [ngClass]="getStatusClass(d.estado?.nombre || '')">
