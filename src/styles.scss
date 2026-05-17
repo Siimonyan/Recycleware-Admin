@@ -40,7 +40,7 @@ h6 {
 }
 
 .premium-card {
-  background-color: #ffffff;
+  background-color: $white;
   border: none;
   border-radius: $border-radius-lg;
   padding: 1.5rem;
@@ -101,7 +101,7 @@ h6 {
   }
 
   tbody tr {
-    background-color: #ffffff;
+    background-color: $white;
     transition: $transition-base;
 
     td {

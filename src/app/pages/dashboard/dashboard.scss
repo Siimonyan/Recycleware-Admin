@@ -18,7 +18,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background-color: #ffffff;
+  background-color: $white;
   color: $primary;
   border: none;
   border-radius: 0.75rem;
@@ -47,7 +47,7 @@
   align-items: center;
   gap: 1.5rem;
   padding: 1.8rem;
-  background-color: #ffffff;
+  background-color: $white;
   border-radius: 1rem;
   box-shadow: $box-shadow-sm;
   transition: $transition-base;
@@ -116,7 +116,7 @@
 
 .breakdown-card,
 .quick-access-card {
-  background-color: #ffffff;
+  background-color: $white;
   border-radius: 1.5rem;
   padding: 2rem;
   box-shadow: $box-shadow-sm;
