@@ -52,22 +52,22 @@ import { FormsModule } from '@angular/forms';
           <tbody>
             <ng-container *ngFor="let s of filteredSolicitudes()">
               <tr *ngIf="s && s.id" class="animate-fade-in">
-                <td><span class="text-muted">#{{ s.id }}</span></td>
-                <td>
+                <td data-label="ID"><span class="text-muted">#{{ s.id }}</span></td>
+                <td data-label="Solicitante">
                   <div class="user-cell">
                     <p class="font-bold">{{ s.applicant?.nombre }}</p>
                     <p class="text-xs">{{ s.applicant?.correo }}</p>
                   </div>
                 </td>
-                <td>
+                <td data-label="Producto">
                   <p class="font-bold">{{ s.product?.nombre }}</p>
                 </td>
-                <td>
+                <td data-label="Estado">
                   <span class="badge" [ngClass]="getStatusClass(s.state?.name || '')">
                     {{ s.state?.name || 'Pendiente' }}
                   </span>
                 </td>
-                <td>
+                <td data-label="Acciones">
                   <div class="table-actions">
                     <button [id]="'viewSolBtn-' + s.id" class="action-btn" (click)="viewInfo(s)" title="Ver Motivo" [attr.aria-label]="'Ver motivo de solicitud de ' + s.applicant?.nombre">
                       <i class="bi bi-info-circle-fill" aria-hidden="true"></i>

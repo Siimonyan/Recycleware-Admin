@@ -20,46 +20,6 @@
   }
 }
 
-.font-bold {
-  font-weight: 600;
-  color: $dark;
-  margin: 0;
-}
-
-.text-xs {
-  font-size: 0.85rem;
-  color: rgba($dark, 0.5);
-}
-
-
-.badge {
-  padding: 0.4rem 0.8rem;
-  border-radius: 2rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-
-  &.pend {
-    background-color: rgba($warning, 0.15);
-    color: darken($warning, 15%);
-  }
-
-  &.aprob {
-    background-color: rgba($success, 0.15);
-    color: darken($success, 10%);
-  }
-
-  &.rech {
-    background-color: rgba($danger, 0.15);
-    color: darken($danger, 5%);
-  }
-
-  &.rev {
-    background-color: rgba($info, 0.15);
-    color: darken($info, 10%);
-  }
-}
-
 .table-actions {
   display: flex;
   gap: 0.6rem;
@@ -211,7 +171,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .table-header {
     flex-direction: column;
     align-items: stretch;

@@ -60,17 +60,6 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.font-bold {
-  font-weight: 600;
-  color: $dark;
-  margin: 0;
-}
-
-.text-xs {
-  font-size: 0.75rem;
-  color: rgba($dark, 0.4);
-}
-
 .cat-badge {
   background-color: rgba($secondary, 0.1);
   color: $secondary;
@@ -209,7 +198,7 @@
   margin-top: 2rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .table-header {
     flex-direction: column;
     align-items: stretch;

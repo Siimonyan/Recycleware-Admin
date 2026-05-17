@@ -31,12 +31,12 @@ import { FormsModule } from '@angular/forms';
           </thead>
           <tbody>
             <tr *ngFor="let c of categorias" class="animate-fade-in">
-              <td><span class="text-muted">#{{ c.id }}</span></td>
-              <td><span class="font-bold">{{ c.nombre }}</span></td>
-              <td class="text-center">
+              <td data-label="ID"><span class="text-muted">#{{ c.id }}</span></td>
+              <td data-label="Nombre"><span class="font-bold">{{ c.nombre }}</span></td>
+              <td data-label="Artículos" class="text-center">
                 <span class="count-badge" [attr.aria-label]="getProductCount(c.id) + ' productos en esta categoría'">{{ getProductCount(c.id) }}</span>
               </td>
-              <td>
+              <td data-label="Acciones">
                 <div class="table-actions">
                   <button [id]="'editCatBtn-' + c.id" class="action-btn" (click)="editCategory(c)" title="Editar" [attr.aria-label]="'Editar categoría ' + c.nombre">
                     <i class="bi bi-pencil-fill" aria-hidden="true"></i>

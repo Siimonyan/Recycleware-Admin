@@ -1,10 +1,5 @@
 @import "../../../styles/variables";
 
-.font-bold {
-  font-weight: 600;
-  color: $dark;
-}
-
 .table-actions {
   display: flex;
   gap: 0.6rem;
@@ -159,7 +154,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .table-header {
     flex-direction: column;
     align-items: stretch;

@@ -46,27 +46,27 @@ import { FormsModule } from '@angular/forms';
           </thead>
           <tbody>
             <tr *ngFor="let p of filteredProductos()" class="animate-fade-in">
-              <td><span class="text-muted">#{{ p.id }}</span></td>
-              <td>
+              <td data-label="ID"><span class="text-muted">#{{ p.id }}</span></td>
+              <td data-label="Imagen">
                 <img [src]="getProductImage(p.imagenUrl)" class="product-img clickable-img" [attr.alt]="'Imagen de ' + p.nombre" (error)="handleImgError($event)" (click)="viewImage(getProductImage(p.imagenUrl))" tabindex="0" (keyup.enter)="viewImage(getProductImage(p.imagenUrl))">
               </td>
-              <td>
+              <td data-label="Nombre">
                 <p class="font-bold">{{ p.nombre }}</p>
                 <p class="text-xs">{{ p.descripcion | slice:0:40 }}...</p>
               </td>
-              <td>
+              <td data-label="Categoría">
                 <span class="cat-badge">{{ p.categoria.nombre }}</span>
               </td>
-               <td>
+               <td data-label="Estado">
                  <span class="state-badge">{{ p.estado?.nombre || 'N/A' }}</span>
                </td>
-               <td>
+               <td data-label="Disponibilidad">
                  <div class="d-flex align-items-center">
                    <span class="status-dot" [ngClass]="p.disponibilidad?.nombre === 'Disponible' ? 'bg-green' : 'bg-red'" aria-hidden="true"></span>
                    <span class="small font-weight-bold">{{ p.disponibilidad?.nombre || 'N/A' }}</span>
                  </div>
                </td>
-              <td>
+              <td data-label="Acciones">
                 <div class="table-actions">
                   <button [id]="'editProdBtn-' + p.id" class="action-btn" (click)="editProduct(p)" title="Editar" [attr.aria-label]="'Editar producto ' + p.nombre">
                     <i class="bi bi-pencil-fill" aria-hidden="true"></i>

@@ -39,19 +39,19 @@ import { FormsModule } from '@angular/forms';
           </thead>
           <tbody>
             <tr *ngFor="let u of filteredUsuarios()" class="animate-fade-in">
-              <td><span class="text-muted">#{{ u.id }}</span></td>
-              <td>
+              <td data-label="ID"><span class="text-muted">#{{ u.id }}</span></td>
+              <td data-label="Nombre">
                 <span class="font-bold" [class.text-muted]="u.activo === false">
                   {{ u.nombre }}
                   <span *ngIf="u.activo === false" class="badge bg-danger ms-2 badge-sm">Inactivo</span>
                 </span>
               </td>
-              <td>{{ u.correo }}</td>
-              <td>
+              <td data-label="Correo">{{ u.correo }}</td>
+              <td data-label="Rol">
                 <span class="badge" [ngClass]="u.rol.toLowerCase()">{{ u.rol }}</span>
               </td>
-              <td>{{ u.localidad || '—' }}</td>
-              <td>
+              <td data-label="Localidad">{{ u.localidad || '—' }}</td>
+              <td data-label="Acciones">
                 <div class="table-actions">
                   <button [id]="'editUserBtn-' + u.id" (click)="editUsuario(u)" class="action-btn edit" title="Editar Datos" [attr.aria-label]="'Editar datos de ' + u.nombre">
                     <i class="bi bi-pencil-fill" aria-hidden="true"></i>

@@ -51,18 +51,18 @@ import { FormsModule } from '@angular/forms';
           <tbody>
             <ng-container *ngFor="let d of filteredDonaciones()">
               <tr *ngIf="d && d.id" class="animate-fade-in">
-                <td><span class="text-muted">#{{ d.id }}</span></td>
-                <td>
+                <td data-label="ID"><span class="text-muted">#{{ d.id }}</span></td>
+                <td data-label="Donante">
                   <span class="font-bold">{{ d.donante?.nombre || 'Donante Anónimo' }}</span>
                   <span *ngIf="d.esAnonimo" class="badge bg-secondary ms-2 badge-sm">Privado</span>
                 </td>
-                <td>{{ d.fechaDonacion | date:'dd/MM/yyyy' }}</td>
-                <td>
+                <td data-label="Fecha">{{ d.fechaDonacion | date:'dd/MM/yyyy' }}</td>
+                <td data-label="Estado">
                   <span class="badge" [ngClass]="getStatusClass(d.estado?.nombre || '')">
                     {{ (d.estado?.nombre || 'Pendiente') | uppercase }}
                   </span>
                 </td>
-                <td>
+                <td data-label="Acciones">
                   <div class="table-actions">
                     <button [id]="'viewDonBtn-' + d.id" class="action-btn info" (click)="viewInfo(d)" title="Ver Detalles" [attr.aria-label]="'Ver detalles de donación de ' + (d.donante?.nombre || 'anónimo')">
                       <i class="bi bi-info-circle-fill" aria-hidden="true"></i>

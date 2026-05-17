@@ -29,11 +29,6 @@
   }
 }
 
-.font-bold {
-  font-weight: 600;
-  color: $dark;
-}
-
 .badge {
   padding: 0.4rem 0.8rem;
   border-radius: 2rem;
@@ -139,7 +134,7 @@
   margin-top: 2rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .table-header { flex-direction: column; align-items: stretch; }
   .table-header .search-box { max-width: none; }
 }
