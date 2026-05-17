@@ -31,7 +31,7 @@ import { FormsModule } from '@angular/forms';
             <option value="Procesado">Procesado</option>
           </select>
         </div>
-        <button id="refreshDonsBtn" class="btn-primary" (click)="loadDonaciones()" aria-label="Actualizar lista de donaciones">
+        <button id="refreshDonsBtn" class="btn btn-primary" (click)="loadDonaciones()" aria-label="Actualizar lista de donaciones">
           <i class="bi bi-arrow-clockwise me-2" aria-hidden="true"></i>
           Actualizar
         </button>

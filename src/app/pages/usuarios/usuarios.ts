@@ -19,7 +19,7 @@ import { FormsModule } from '@angular/forms';
             <input id="userSearchInput" type="text" class="form-control" placeholder="Buscar por nombre o correo..." [(ngModel)]="filterTerm" aria-label="Buscar usuarios">
           </div>
         </div>
-        <button id="refreshUsersBtn" class="btn-primary" (click)="loadUsuarios()" aria-label="Actualizar lista de usuarios">
+        <button id="refreshUsersBtn" class="btn btn-primary" (click)="loadUsuarios()" aria-label="Actualizar lista de usuarios">
           <i class="bi bi-arrow-clockwise me-2" aria-hidden="true"></i>
           Actualizar
         </button>

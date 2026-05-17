@@ -50,7 +50,7 @@ import { timeout } from 'rxjs';
         </div>
 
         <div class="footer-actions">
-          <button id="saveProfileBtn" type="submit" class="btn-primary" [disabled]="saving">
+          <button id="saveProfileBtn" type="submit" class="btn btn-primary" [disabled]="saving">
             <i class="bi bi-save me-2" aria-hidden="true"></i>
             {{ saving ? 'Guardando...' : 'Guardar Cambios' }}
           </button>

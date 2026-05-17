@@ -25,7 +25,7 @@ import { FormsModule } from '@angular/forms';
             <option *ngFor="let cat of categorias" [value]="cat.nombre">{{ cat.nombre }}</option>
           </select>
         </div>
-        <button id="newProductBtn" class="btn-primary" (click)="showCreateModal = true" aria-label="Añadir nuevo producto">
+        <button id="newProductBtn" class="btn btn-primary" (click)="showCreateModal = true" aria-label="Añadir nuevo producto">
           <i class="bi bi-plus-lg me-2" aria-hidden="true"></i>
           Nuevo Producto
         </button>

@@ -32,7 +32,7 @@ import { FormsModule } from '@angular/forms';
             <option value="Entregada">Entregada</option>
           </select>
         </div>
-        <button id="refreshSolsBtn" class="btn-primary" (click)="loadSolicitudes()" aria-label="Actualizar lista de solicitudes">
+        <button id="refreshSolsBtn" class="btn btn-primary" (click)="loadSolicitudes()" aria-label="Actualizar lista de solicitudes">
           <i class="bi bi-arrow-clockwise me-2" aria-hidden="true"></i>
           Actualizar
         </button>

@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
     <div class="premium-card">
       <div class="table-header">
         <h3>Gestión de Categorías</h3>
-        <button id="newCategoryBtn" class="btn-primary" (click)="showModal = true" aria-label="Añadir nueva categoría">
+        <button id="newCategoryBtn" class="btn btn-primary" (click)="showModal = true" aria-label="Añadir nueva categoría">
           <i class="bi bi-plus-lg me-2" aria-hidden="true"></i>
           Nueva Categoría
         </button>
