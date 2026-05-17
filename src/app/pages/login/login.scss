@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $body-bg;
+  background-color: $primary;
   overflow: hidden;
   padding: 1rem;
 }
@@ -23,7 +23,7 @@
 .shape-1 {
   width: 400px;
   height: 400px;
-  background: rgba($primary, 0.08);
+  background: rgba($secondary, 0.15);
   top: -10%;
   left: -10%;
 }
@@ -31,7 +31,7 @@
 .shape-2 {
   width: 500px;
   height: 500px;
-  background: rgba($secondary, 0.05);
+  background: rgba($success, 0.1);
   bottom: -20%;
   right: -10%;
   animation-delay: -5s;
