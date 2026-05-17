@@ -2,16 +2,41 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
 import { Solicitud } from '../../interfaces/admin.interfaces';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-solicitudes',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   styleUrls: ['./solicitudes.scss'],
   template: `
     <div class="premium-card">
       <h3>Solicitudes de Productos</h3>
       <p class="text-muted mb-4">Gestiona las peticiones de los usuarios para adquirir productos reciclados.</p>
+
+      <div class="table-header">
+        <div class="search-box">
+          <div class="input-group">
+            <span class="input-group-text bg-transparent border-0"><i class="bi bi-search" aria-hidden="true"></i></span>
+            <input id="solSearchInput" type="text" class="form-control" placeholder="Buscar por nombre o producto..." [(ngModel)]="filterTerm" aria-label="Buscar solicitudes">
+          </div>
+        </div>
+        <div class="filters">
+          <label for="stateFilterSelect" class="visually-hidden">Filtrar por estado</label>
+          <select id="stateFilterSelect" class="form-control" [(ngModel)]="selectedEstado">
+            <option value="">Todos los Estados</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="En Revisión">En Revisión</option>
+            <option value="Aprobada">Aprobada</option>
+            <option value="Denegada">Denegada</option>
+            <option value="Entregada">Entregada</option>
+          </select>
+        </div>
+        <button id="refreshSolsBtn" class="btn-primary" (click)="loadSolicitudes()" aria-label="Actualizar lista de solicitudes">
+          <i class="bi bi-arrow-clockwise me-2" aria-hidden="true"></i>
+          Actualizar
+        </button>
+      </div>
 
       <div class="table-responsive">
         <table class="premium-table" aria-label="Listado de solicitudes de productos">
@@ -25,7 +50,7 @@ import { Solicitud } from '../../interfaces/admin.interfaces';
             </tr>
           </thead>
           <tbody>
-            <ng-container *ngFor="let s of solicitudes">
+            <ng-container *ngFor="let s of filteredSolicitudes()">
               <tr *ngIf="s && s.id" class="animate-fade-in">
                 <td><span class="text-muted">#{{ s.id }}</span></td>
                 <td>
@@ -115,8 +140,26 @@ export class SolicitudesComponent implements OnInit {
   solicitudes: Solicitud[] = [];
   showInfoModal = false;
   selectedInfoItem: Solicitud | null = null;
+  filterTerm = '';
+  selectedEstado = '';
 
   constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) { }
+
+  filteredSolicitudes() {
+    return this.solicitudes.filter(s => {
+      // 1. Filtrar por término de búsqueda (nombre del solicitante o nombre del producto)
+      const matchesSearch = !this.filterTerm || 
+        (s.applicant?.nombre?.toLowerCase().includes(this.filterTerm.toLowerCase())) ||
+        (s.product?.nombre?.toLowerCase().includes(this.filterTerm.toLowerCase())) ||
+        (s.applicant?.correo?.toLowerCase().includes(this.filterTerm.toLowerCase()));
+
+      // 2. Filtrar por estado
+      const matchesEstado = !this.selectedEstado || 
+        (s.state?.name?.toLowerCase() === this.selectedEstado.toLowerCase());
+
+      return matchesSearch && matchesEstado;
+    });
+  }
 
   ngOnInit() {
     this.loadSolicitudes();
