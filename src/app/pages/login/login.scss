@@ -143,8 +143,9 @@
   }
 }
 
-.input-group {
+.login-input-group {
   margin-bottom: 1.5rem;
+  width: 100%;
 
   label {
     display: block;
@@ -158,6 +159,8 @@
 
   .input-wrapper {
     position: relative;
+    width: 100%;
+    box-sizing: border-box;
 
     i {
       position: absolute;
@@ -169,11 +172,13 @@
     }
 
     input {
+      box-sizing: border-box;
+      height: 3.5rem;
       width: 100%;
       background-color: white;
       border: 2px solid rgba($secondary, 0.2);
       border-radius: 1rem;
-      padding: 0.9rem 1rem 0.9rem 3.2rem;
+      padding: 0 1rem 0 3.2rem;
       color: $dark;
       font-size: 1rem;
       transition: $transition-base;
@@ -206,11 +211,16 @@
 }
 
 .btn-login {
+  box-sizing: border-box;
+  height: 3.5rem;
   width: 100%;
   background-color: $primary;
   color: white;
   border: none;
-  padding: 1.1rem;
+  padding: 0 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 1rem;
   font-size: 1.1rem;
   font-weight: 800;

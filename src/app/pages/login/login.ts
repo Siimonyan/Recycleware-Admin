@@ -33,7 +33,7 @@ import { Router } from '@angular/router';
               <p class="subtitle">Ingresa tus credenciales de administrador</p>
 
               <form (ngSubmit)="onLogin()" #loginForm="ngForm">
-                <div class="input-group">
+                <div class="login-input-group">
                   <label for="adminEmail">Correo Electrónico</label>
                   <div class="input-wrapper">
                     <i class="bi bi-envelope"></i>
@@ -48,7 +48,7 @@ import { Router } from '@angular/router';
                   </div>
                 </div>
 
-                <div class="input-group">
+                <div class="login-input-group">
                   <label for="adminPassword">Contraseña</label>
                   <div class="input-wrapper">
                     <i class="bi bi-lock"></i>
