@@ -54,7 +54,7 @@ import { FormsModule } from '@angular/forms';
                 <td><span class="text-muted">#{{ d.id }}</span></td>
                 <td>
                   <span class="font-bold">{{ d.donante?.nombre || 'Donante Anónimo' }}</span>
-                  <span *ngIf="d.esAnonimo" class="badge bg-secondary ms-2" style="font-size: 0.7em;">Privado</span>
+                  <span *ngIf="d.esAnonimo" class="badge bg-secondary ms-2 badge-sm">Privado</span>
                 </td>
                 <td>{{ d.fechaDonacion | date:'dd/MM/yyyy' }}</td>
                 <td>

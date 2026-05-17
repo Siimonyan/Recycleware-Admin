@@ -43,7 +43,7 @@ import { FormsModule } from '@angular/forms';
               <td>
                 <span class="font-bold" [class.text-muted]="u.activo === false">
                   {{ u.nombre }}
-                  <span *ngIf="u.activo === false" class="badge bg-danger ms-2" style="font-size: 0.7em;">Inactivo</span>
+                  <span *ngIf="u.activo === false" class="badge bg-danger ms-2 badge-sm">Inactivo</span>
                 </span>
               </td>
               <td>{{ u.correo }}</td>
