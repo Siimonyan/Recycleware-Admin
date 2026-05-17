@@ -201,12 +201,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getEnRevision(): number {
-    const total = this.stats.totalSolicitudes ?? 0;
-    const pend = this.stats.solicitudesPendientes ?? 0;
-    const appr = this.stats.solicitudesAprobadas ?? 0;
-    const deny = this.stats.solicitudesDenegadas ?? 0;
-    const entr = this.stats.solicitudesEntregadas ?? 0;
-    return Math.max(0, total - pend - appr - deny - entr);
+    return this.stats.solicitudesEnRevision ?? 0;
   }
 
   exportExcel() {
@@ -217,6 +212,7 @@ export class DashboardComponent implements OnInit {
       ['', ''],
       ['USUARIOS', ''],
       ['Total Usuarios', s.totalUsuarios ?? 0],
+      ['Administradores', s.totalAdmins ?? 0],
       ['Particulares', s.totalParticulares ?? 0],
       ['Empresas', s.totalEmpresas ?? 0],
       ['', ''],
@@ -236,6 +232,7 @@ export class DashboardComponent implements OnInit {
       ['DONACIONES', ''],
       ['Total Donaciones', s.totalDonaciones ?? 0],
       ['Pendientes', s.donacionesPendientes ?? 0],
+      ['En Recogida', s.donacionesEnRecogida ?? 0],
       ['Recibidas', s.donacionesRecibidas ?? 0],
     ];
 
