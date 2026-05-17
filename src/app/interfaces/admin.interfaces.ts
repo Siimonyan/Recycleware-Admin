@@ -43,6 +43,7 @@ export interface Donacion {
   cantidadProductos: number;
   descripcion: string;
   peso?: number;
+  esAnonimo?: boolean;
 }
 
 export interface Mensaje {
