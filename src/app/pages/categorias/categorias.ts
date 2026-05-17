@@ -65,7 +65,7 @@ import { FormsModule } from '@angular/forms';
           
           <div class="modal-actions">
             <button id="cancelCatBtn" class="btn btn-light" (click)="closeModal()">Cancelar</button>
-            <button id="saveCatBtn" class="btn-primary" (click)="saveCategory()" [disabled]="!currentCategory.nombre.trim()">Guardar</button>
+            <button id="saveCatBtn" class="btn btn-primary" (click)="saveCategory()" [disabled]="!currentCategory.nombre.trim()">Guardar</button>
           </div>
        </div>
     </div>

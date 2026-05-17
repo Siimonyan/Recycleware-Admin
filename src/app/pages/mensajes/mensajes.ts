@@ -73,7 +73,7 @@ import { FormsModule } from '@angular/forms';
           
           <div class="modal-actions mt-4">
             <button id="cancelMsgBtn" class="btn btn-light" (click)="closeModal()">Cancelar</button>
-            <button id="sendMsgBtn" class="btn-primary" (click)="sendResponse()" [disabled]="!respuesta.trim() || sending">
+            <button id="sendMsgBtn" class="btn btn-primary" (click)="sendResponse()" [disabled]="!respuesta.trim() || sending">
                 <i class="bi bi-send me-2" *ngIf="!sending"></i>
                 {{ sending ? 'Enviando...' : 'Enviar Respuesta' }}
             </button>

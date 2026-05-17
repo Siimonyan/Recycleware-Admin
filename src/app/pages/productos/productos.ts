@@ -138,7 +138,7 @@ import { FormsModule } from '@angular/forms';
           
           <div class="modal-actions">
             <button id="cancelProdBtn" class="btn btn-light" (click)="closeModal()">Cancelar</button>
-            <button id="saveProdBtn" class="btn-primary" (click)="saveProduct()">{{ editingProduct ? 'Actualizar' : 'Guardar' }}</button>
+            <button id="saveProdBtn" class="btn btn-primary" (click)="saveProduct()">{{ editingProduct ? 'Actualizar' : 'Guardar' }}</button>
           </div>
        </div>
     </div>
