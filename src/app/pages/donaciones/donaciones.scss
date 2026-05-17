@@ -91,3 +91,68 @@
     color: $dark;
   }
 }
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+
+  .search-box {
+    flex: 1;
+    max-width: 450px;
+    
+    .input-group {
+      background-color: $fondo-secundario;
+      border-radius: 0.75rem;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      
+      i { color: rgba($dark, 0.4); }
+      
+      .form-control {
+        background: transparent;
+        border: none;
+        padding: 0.8rem 0.5rem;
+        box-shadow: none;
+        outline: none;
+        width: 100%;
+        
+        &:focus { box-shadow: none; }
+      }
+    }
+  }
+
+  .filters {
+    width: 200px;
+    
+    .form-control {
+      background-color: $fondo-secundario;
+      border: 1px solid transparent;
+      border-radius: 0.75rem;
+      padding: 0.8rem 1rem;
+      transition: $transition-base;
+
+      &:focus {
+        background-color: white;
+        border-color: $secondary;
+        box-shadow: 0 0 0 4px rgba($secondary, 0.1);
+        outline: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .table-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .table-header .search-box,
+  .table-header .filters {
+    max-width: none;
+    width: 100%;
+  }
+}

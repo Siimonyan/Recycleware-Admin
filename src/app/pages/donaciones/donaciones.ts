@@ -2,16 +2,40 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
 import { Donacion } from '../../interfaces/admin.interfaces';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-donaciones',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   styleUrls: ['./donaciones.scss'],
   template: `
     <div class="premium-card">
       <h3>Donaciones Entrantes</h3>
       <p class="text-muted mb-4">Revisa y valida las donaciones de productos realizadas por los usuarios.</p>
+
+      <div class="table-header">
+        <div class="search-box">
+          <div class="input-group">
+            <span class="input-group-text bg-transparent border-0"><i class="bi bi-search" aria-hidden="true"></i></span>
+            <input id="donSearchInput" type="text" class="form-control" placeholder="Buscar por donante o descripción..." [(ngModel)]="filterTerm" aria-label="Buscar donaciones">
+          </div>
+        </div>
+        <div class="filters">
+          <label for="stateFilterSelect" class="visually-hidden">Filtrar por estado</label>
+          <select id="stateFilterSelect" class="form-control" [(ngModel)]="selectedEstado">
+            <option value="">Todos los Estados</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="En Recogida">En Recogida</option>
+            <option value="Recibido">Recibido</option>
+            <option value="Procesado">Procesado</option>
+          </select>
+        </div>
+        <button id="refreshDonsBtn" class="btn-primary" (click)="loadDonaciones()" aria-label="Actualizar lista de donaciones">
+          <i class="bi bi-arrow-clockwise me-2" aria-hidden="true"></i>
+          Actualizar
+        </button>
+      </div>
 
       <div class="table-responsive">
         <table class="premium-table" aria-label="Listado de donaciones de productos">
@@ -25,7 +49,7 @@ import { Donacion } from '../../interfaces/admin.interfaces';
             </tr>
           </thead>
           <tbody>
-            <ng-container *ngFor="let d of donaciones">
+            <ng-container *ngFor="let d of filteredDonaciones()">
               <tr *ngIf="d && d.id" class="animate-fade-in">
                 <td><span class="text-muted">#{{ d.id }}</span></td>
                 <td>
@@ -109,8 +133,26 @@ export class DonacionesComponent implements OnInit {
   donaciones: Donacion[] = [];
   showInfoModal = false;
   selectedInfoItem: Donacion | null = null;
+  filterTerm = '';
+  selectedEstado = '';
 
   constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) {}
+
+  filteredDonaciones() {
+    return this.donaciones.filter(d => {
+      // 1. Filtrar por término de búsqueda (nombre del donante o descripción de la donación)
+      const donanteNombre = d.donante?.nombre || 'Donante Anónimo';
+      const matchesSearch = !this.filterTerm || 
+        (donanteNombre.toLowerCase().includes(this.filterTerm.toLowerCase())) ||
+        (d.descripcion?.toLowerCase().includes(this.filterTerm.toLowerCase()));
+
+      // 2. Filtrar por estado
+      const matchesEstado = !this.selectedEstado || 
+        (d.estado?.nombre?.toLowerCase() === this.selectedEstado.toLowerCase());
+
+      return matchesSearch && matchesEstado;
+    });
+  }
 
   ngOnInit() {
     this.loadDonaciones();
